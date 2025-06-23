@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { 
   Package, 
   ChevronRight, 
@@ -149,14 +148,16 @@ const HeroSection = () => {
           <div className="relative order-2 lg:order-1">
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
               {images.map((image, index) => (
-                <Image
+                <div
                   key={index}
-                  src={image}
-                  alt={`ParcelPoint Locker ${index + 1}`}
-                  fill
-                  className={`object-cover transition-opacity duration-1000 ${
+                  className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
                     index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                   }`}
+                  style={{
+                    backgroundImage: `url(${image})`
+                  }}
+                  role="img"
+                  aria-label={`ParcelPoint Locker ${index + 1}`}
                 />
               ))}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
