@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { 
   Package, 
   ChevronRight, 
@@ -138,7 +139,7 @@ const HeroSection = () => {
       setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [images.length]);
 
   return (
     <section id="home" className="pt-20 pb-16 px-4 sm:px-6 bg-gradient-to-br from-white dark:from-gray-900 to-emerald-50 dark:to-emerald-950">
@@ -148,11 +149,12 @@ const HeroSection = () => {
           <div className="relative order-2 lg:order-1">
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
               {images.map((image, index) => (
-                <img
+                <Image
                   key={index}
                   src={image}
                   alt={`ParcelPoint Locker ${index + 1}`}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  fill
+                  className={`object-cover transition-opacity duration-1000 ${
                     index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                   }`}
                 />
@@ -593,7 +595,7 @@ const LocationsSection = () => {
 
         <div className="text-center mt-12">
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Want ParcelPoint at your location? We're always looking for new partners.
+            Want ParcelPoint at your location? We&apos;re always looking for new partners.
           </p>
           <button className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-3 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-semibold">
             Suggest a Location
@@ -663,7 +665,7 @@ const TestimonialsSection = () => {
                 {renderStars(testimonial.rating)}
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                "{testimonial.content}"
+                &ldquo;{testimonial.content}&rdquo;
               </p>
               <div>
                 <h4 className="font-bold text-gray-900 dark:text-white">{testimonial.name}</h4>
@@ -784,7 +786,7 @@ const ContactSection = () => {
               Get In Touch
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-              Ready to bring ParcelPoint to your location? Let's discuss how we can work together.
+              Ready to bring ParcelPoint to your location? Let&apos;s discuss how we can work together.
             </p>
 
             <div className="space-y-6">
@@ -971,15 +973,19 @@ const ParcelPointWebsite = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('parcelpoint-theme') as 'light' | 'dark' || 'light';
-    setTheme(savedTheme);
-    document.documentElement.className = savedTheme;
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('parcelpoint-theme') as 'light' | 'dark' || 'light';
+      setTheme(savedTheme);
+      document.documentElement.className = savedTheme;
+    }
   }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    localStorage.setItem('parcelpoint-theme', newTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('parcelpoint-theme', newTheme);
+    }
     document.documentElement.className = newTheme;
   };
 
