@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { 
   Package, 
@@ -9,15 +11,10 @@ import {
   Sun, 
   Moon,
   CheckCircle,
-  Gift,
-  Snowflake,
-  Copy,
-  Check,
   Clock,
   Shield,
   Smartphone,
   CreditCard,
-  Users,
   Star,
   Mail,
   Phone,
@@ -129,8 +126,8 @@ const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme }) => {
 
 // Hero Section Component
 const HeroSection = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const images: string[] = [
     'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
     'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop',
     'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&h=600&fit=crop'
@@ -249,43 +246,35 @@ const HeroSection = () => {
 };
 
 // How It Works Section
-interface Step {
-  number: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
 const HowItWorksSection = () => {
-  const steps: Step[] = [
+  const steps = [
     {
       number: "01",
       title: "Drop Off",
       subtitle: "Secure Deposit",
       description: "Couriers or individuals deposit parcels securely at convenient ParcelPoint locations across the city.",
-      icon: <Package className="h-8 w-8" />
+      IconComponent: Package
     },
     {
       number: "02", 
       title: "Get Code",
       subtitle: "Instant Notification",
       description: "Receive a unique 6-digit access code via SMS immediately when your parcel is stored.",
-      icon: <Smartphone className="h-8 w-8" />
+      IconComponent: Smartphone
     },
     {
       number: "03",
       title: "Pay & Collect",
       subtitle: "Quick M-PESA",
       description: "Use your code to access the locker and pay securely with M-PESA when collecting your parcel.",
-      icon: <CreditCard className="h-8 w-8" />
+      IconComponent: CreditCard
     },
     {
       number: "04",
       title: "24/7 Access",
       subtitle: "Your Schedule",
       description: "Pick up your parcels anytime that suits you - no more missed deliveries or waiting around.",
-      icon: <Clock className="h-8 w-8" />
+      IconComponent: Clock
     }
   ];
 
@@ -312,7 +301,7 @@ const HowItWorksSection = () => {
                 
                 {/* Icon */}
                 <div className="w-16 h-16 bg-emerald-600 dark:bg-emerald-500 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
-                  {step.icon}
+                  <step.IconComponent className="h-8 w-8" />
                 </div>
                 
                 {/* Content */}
@@ -327,6 +316,50 @@ const HowItWorksSection = () => {
                   <ChevronRight className="h-8 w-8 text-emerald-300 dark:text-emerald-700" />
                 </div>
               )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Statistics Section
+const StatsSection = () => {
+  const stats = [
+    {
+      number: "10,000+",
+      label: "Parcels Delivered",
+      IconComponent: Package
+    },
+    {
+      number: "50+",
+      label: "Active Locations",
+      IconComponent: MapPin
+    },
+    {
+      number: "24/7",
+      label: "Always Available",
+      IconComponent: Clock
+    },
+    {
+      number: "99.9%",
+      label: "Uptime Reliability",
+      IconComponent: Shield
+    }
+  ];
+
+  return (
+    <section className="py-20 px-4 sm:px-6 bg-emerald-600 dark:bg-emerald-700 text-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <div key={index} className="text-center group">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white/30 transition-colors">
+                <stat.IconComponent className="h-8 w-8 text-white" />
+              </div>
+              <div className="text-4xl font-bold mb-2">{stat.number}</div>
+              <div className="text-emerald-100">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -570,10 +603,90 @@ const LocationsSection = () => {
     </section>
   );
 };
-const FAQSection = () => {
-  const [openFAQ, setOpenFAQ] = useState(null);
 
-  const faqs = [
+// Testimonials Section
+interface Testimonial {
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+}
+
+const TestimonialsSection = () => {
+  const testimonials: Testimonial[] = [
+    {
+      name: "Sarah Wanjiku",
+      role: "Small Business Owner",
+      content: "ParcelPoint has revolutionized how I receive supplies for my shop. No more waiting around for deliveries or missing important packages!",
+      rating: 5
+    },
+    {
+      name: "David Ochieng",
+      role: "Office Worker",
+      content: "I love that I can pick up my packages anytime after work. The M-PESA payment is so convenient and the process is super quick.",
+      rating: 5
+    },
+    {
+      name: "Grace Muthoni", 
+      role: "University Student",
+      content: "As a student, ParcelPoint is perfect for receiving textbooks and supplies. The locations are convenient and always accessible.",
+      rating: 5
+    }
+  ];
+
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 0; i < rating; i++) {
+      stars.push(
+        <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+      );
+    }
+    return stars;
+  };
+
+  return (
+    <section className="py-20 px-4 sm:px-6 bg-emerald-50 dark:bg-gray-800">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+            What Our Users Say
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Thousands of satisfied customers trust ParcelPoint for their delivery needs
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="flex items-center mb-4">
+                {renderStars(testimonial.rating)}
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                "{testimonial.content}"
+              </p>
+              <div>
+                <h4 className="font-bold text-gray-900 dark:text-white">{testimonial.name}</h4>
+                <p className="text-emerald-600 dark:text-emerald-500 text-sm">{testimonial.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// FAQ Section
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const FAQSection = () => {
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+
+  const faqs: FAQItem[] = [
     {
       question: "How do I pick up my parcel from a ParcelPoint locker?",
       answer: "Simply use the unique 6-digit code sent to your phone via SMS. Enter the code at the locker touchscreen, make your M-PESA payment, and your compartment will open automatically."
@@ -600,6 +713,10 @@ const FAQSection = () => {
     }
   ];
 
+  const handleFAQToggle = (index: number) => {
+    setOpenFAQ(openFAQ === index ? null : index);
+  };
+
   return (
     <section id="faq" className="py-20 px-4 sm:px-6 bg-white dark:bg-gray-900">
       <div className="max-w-4xl mx-auto">
@@ -616,7 +733,7 @@ const FAQSection = () => {
           {faqs.map((faq, index) => (
             <div key={index} className="bg-emerald-50 dark:bg-gray-800 rounded-xl border border-emerald-100 dark:border-emerald-900/30 overflow-hidden">
               <button
-                onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                onClick={() => handleFAQToggle(index)}
                 className="w-full px-6 py-6 text-left flex justify-between items-center hover:bg-emerald-100 dark:hover:bg-gray-700 transition-colors"
               >
                 <span className="text-lg font-semibold text-gray-900 dark:text-white pr-4">{faq.question}</span>
@@ -648,10 +765,8 @@ const ContactSection = () => {
   });
 
   const handleSubmit = () => {
-    // Handle form submission
     if (formData.name && formData.email && formData.message) {
       console.log('Form submitted:', formData);
-      // Reset form
       setFormData({ name: '', email: '', message: '' });
       alert('Message sent successfully!');
     } else {
