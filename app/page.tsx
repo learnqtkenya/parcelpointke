@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Package, 
-  ChevronRight, 
-  ChevronLeft, 
-  MapPin, 
-  Menu, 
-  X, 
-  Sun, 
+import {
+  Package,
+  ChevronRight,
+  ChevronLeft,
+  MapPin,
+  Menu,
+  X,
+  Sun,
   Moon,
   CheckCircle,
   Clock,
@@ -128,9 +128,9 @@ const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme }) => {
 const HeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const images: string[] = [
-    'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=800&h=600&fit=crop'
+    '/images/parcelpoint/1.jpeg',
+    '/images/parcelpoint/2.jpeg',
+    '/images/parcelpoint/3.jpeg'
   ];
 
   useEffect(() => {
@@ -150,9 +150,8 @@ const HeroSection = () => {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
-                    index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                    }`}
                   style={{
                     backgroundImage: `url(${image})`
                   }}
@@ -161,7 +160,7 @@ const HeroSection = () => {
                 />
               ))}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              
+
               {/* Navigation arrows */}
               <button
                 onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
@@ -175,18 +174,17 @@ const HeroSection = () => {
               >
                 <ChevronRight className="h-6 w-6 text-gray-600 dark:text-gray-300" />
               </button>
-              
+
               {/* Indicators */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                 {images.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      index === currentImageIndex 
-                        ? 'bg-emerald-500' 
+                    className={`w-3 h-3 rounded-full transition-colors ${index === currentImageIndex
+                        ? 'bg-emerald-500'
                         : 'bg-white/50 dark:bg-gray-600/50'
-                    }`}
+                      }`}
                   />
                 ))}
               </div>
@@ -201,12 +199,12 @@ const HeroSection = () => {
               <br />Made Simple
             </h1>
             <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-              Secure, convenient parcel pickup and delivery anytime, anywhere. 
+              Secure, convenient parcel pickup and delivery anytime, anywhere.
               Experience the future of last-mile logistics.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <button 
+              <button
                 onClick={() => {
                   const element = document.querySelector('#locations');
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -215,7 +213,7 @@ const HeroSection = () => {
               >
                 Find Locations
               </button>
-              <button 
+              <button
                 onClick={() => {
                   const element = document.querySelector('#how-it-works');
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -259,7 +257,7 @@ const HowItWorksSection = () => {
       IconComponent: Package
     },
     {
-      number: "02", 
+      number: "02",
       title: "Get Code",
       subtitle: "Instant Notification",
       description: "Receive a unique 6-digit access code via SMS immediately when your parcel is stored.",
@@ -301,18 +299,18 @@ const HowItWorksSection = () => {
                 <div className="text-6xl font-bold text-emerald-100 dark:text-emerald-900/50 absolute top-4 right-4">
                   {step.number}
                 </div>
-                
+
                 {/* Icon */}
                 <div className="w-16 h-16 bg-emerald-600 dark:bg-emerald-500 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
                   <step.IconComponent className="h-8 w-8" />
                 </div>
-                
+
                 {/* Content */}
                 <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{step.title}</h3>
                 <h4 className="text-emerald-600 dark:text-emerald-500 font-semibold mb-4">{step.subtitle}</h4>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{step.description}</p>
               </div>
-              
+
               {/* Connector Arrow */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
@@ -331,12 +329,12 @@ const HowItWorksSection = () => {
 const StatsSection = () => {
   const stats = [
     {
-      number: "10,000+",
+      number: "1000+",
       label: "Parcels Delivered",
       IconComponent: Package
     },
     {
-      number: "50+",
+      number: "2",
       label: "Active Locations",
       IconComponent: MapPin
     },
@@ -391,7 +389,7 @@ const ServicesSection = () => {
       description: "We handle everything - equipment, maintenance, and operations. You just provide space and earn steady rental income.",
       features: [
         "No upfront investment required",
-        "All maintenance included", 
+        "All maintenance included",
         "Guaranteed monthly payments",
         "Full operational support"
       ],
@@ -401,7 +399,7 @@ const ServicesSection = () => {
     {
       title: "Buy & Own Complete",
       subtitle: "Full Ownership",
-      price: "One-Time Purchase", 
+      price: "One-Time Purchase",
       description: "Purchase the complete system and own it forever. Keep 100% of all revenue and customize as needed.",
       features: [
         "Complete system ownership",
@@ -448,7 +446,7 @@ const ServicesSection = () => {
                   Most Popular
                 </div>
               )}
-              
+
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{service.title}</h3>
                 <p className="text-emerald-600 dark:text-emerald-500 font-semibold mb-4">{service.subtitle}</p>
@@ -466,11 +464,29 @@ const ServicesSection = () => {
                 ))}
               </ul>
 
-              <button className={`w-full py-4 rounded-xl font-semibold transition-colors ${
-                service.popular 
-                  ? 'bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600' 
-                  : 'border-2 border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
-              }`}>
+              <button
+                onClick={() => {
+                  let message = '';
+                  switch (service.title) {
+                    case 'We Pay You Rent':
+                      message = 'Hi ParcelPoint! I have space available and I\'m interested in your rental model where you pay monthly rent. I\'d like to learn more about the requirements and rental rates. Can we discuss this opportunity?';
+                      break;
+                    case 'Buy & Own Complete':
+                      message = 'Hi ParcelPoint! I\'m interested in purchasing a complete ParcelPoint system for full ownership. Could you please provide me with pricing details and what\'s included in the package?';
+                      break;
+                    case 'Revenue Partnership':
+                      message = 'Hi ParcelPoint! I\'m interested in your revenue-sharing partnership model (70/30 split). I have a good location and would like to know more about the requirements and how we can work together.';
+                      break;
+                    default:
+                      message = 'Hi ParcelPoint! I\'m interested in learning more about your services and how we can work together.';
+                  }
+                  const whatsappUrl = `https://wa.me/254700549607?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
+                className={`w-full py-4 rounded-xl font-semibold transition-colors ${service.popular
+                    ? 'bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600'
+                    : 'border-2 border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                  }`}>
                 {service.cta}
               </button>
             </div>
@@ -488,51 +504,29 @@ interface Location {
   status: string;
   hours: string;
   lockers: number;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }
 
 const LocationsSection = () => {
   const locations: Location[] = [
     {
-      name: "Westgate Mall",
-      address: "Westlands, Nairobi",
-      status: "Active",
-      hours: "24/7",
-      lockers: 24
-    },
-    {
-      name: "Garden City Mall", 
+      name: "Garden City Mall",
       address: "Thika Road, Nairobi",
       status: "Active",
       hours: "24/7",
-      lockers: 32
+      lockers: 48, 
+      coordinates: { lat: -1.231904, lng: 36.878941 }
     },
     {
-      name: "Village Market",
-      address: "Gigiri, Nairobi", 
+      name: "Doonholm",
+      address: "Donholm Savannah Rd",
       status: "Coming Soon",
       hours: "24/7",
-      lockers: 16
-    },
-    {
-      name: "Two Rivers Mall",
-      address: "Limuru Road, Nairobi",
-      status: "Coming Soon", 
-      hours: "24/7",
-      lockers: 20
-    },
-    {
-      name: "Junction Mall",
-      address: "Ngong Road, Nairobi",
-      status: "Planning",
-      hours: "24/7",
-      lockers: 28
-    },
-    {
-      name: "Sarit Centre",
-      address: "Westlands, Nairobi",
-      status: "Planning",
-      hours: "24/7", 
-      lockers: 24
+      lockers: 15, 
+      coordinates: { lat: -1.2990613, lng: 36.8889069 }
     }
   ];
 
@@ -557,7 +551,7 @@ const LocationsSection = () => {
             Our Locations
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Find ParcelPoint lockers at convenient locations across Nairobi, with more cities coming soon.
+            Find ParcelPoint lockers at convenient locations across Nairobi, with more locations coming soon.
           </p>
         </div>
 
@@ -573,7 +567,7 @@ const LocationsSection = () => {
                   {location.status}
                 </span>
               </div>
-              
+
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-400">Hours:</span>
@@ -586,9 +580,22 @@ const LocationsSection = () => {
               </div>
 
               {location.status === 'Active' && (
-                <button className="w-full mt-4 bg-emerald-600 dark:bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium">
-                  Get Directions
-                </button>
+                <button 
+                onClick={() => {
+                  const coordinatesUrl = `https://www.google.com/maps/dir/?api=1&destination=${location.coordinates.lat},${location.coordinates.lng}`;
+                  const fallbackUrl = `https://www.google.com/maps/search/${encodeURIComponent(location.name + ' ' + location.address)}`;
+                  
+                  // Try coordinates first, with fallback option
+                  try {
+                    window.open(coordinatesUrl, '_blank');
+                  } catch (error) {
+                    window.open(fallbackUrl, '_blank');
+                    console.error(error)
+                  }
+                }}
+                className="w-full mt-4 bg-emerald-600 dark:bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium">
+                Get Directions
+              </button>
               )}
             </div>
           ))}
@@ -596,9 +603,15 @@ const LocationsSection = () => {
 
         <div className="text-center mt-12">
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Want ParcelPoint at your location? We&apos;re always looking for new partners.
+            Want ParcelPoint at your location? We&apos;re always looking for new locations.
           </p>
-          <button className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-3 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-semibold">
+          <button
+            onClick={() => {
+              const message = 'Hi ParcelPoint! I have a location that would be perfect for your smart lockers. I\'d like to suggest this location and discuss the partnership opportunities. Can we arrange a time to talk?';
+              const whatsappUrl = `https://wa.me/254700549607?text=${encodeURIComponent(message)}`;
+              window.open(whatsappUrl, '_blank');
+            }}
+            className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-3 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-semibold">
             Suggest a Location
           </button>
         </div>
@@ -620,7 +633,7 @@ const TestimonialsSection = () => {
     {
       name: "Sarah Wanjiku",
       role: "Small Business Owner",
-      content: "ParcelPoint has revolutionized how I receive supplies for my shop. No more waiting around for deliveries or missing important packages!",
+      content: "ParcelPoint has revolutionized how I drop off packages for my clients. No more waiting in queues at bus stations!",
       rating: 5
     },
     {
@@ -630,9 +643,9 @@ const TestimonialsSection = () => {
       rating: 5
     },
     {
-      name: "Grace Muthoni", 
-      role: "University Student",
-      content: "As a student, ParcelPoint is perfect for receiving textbooks and supplies. The locations are convenient and always accessible.",
+      name: "Lee",
+      role: "Tourist",
+      content: "I have been used to this in my country. It was a great relieve when I found ParcelPoint in Kenya. The locations are convenient and always accessible.",
       rating: 5
     }
   ];
@@ -769,9 +782,25 @@ const ContactSection = () => {
 
   const handleSubmit = () => {
     if (formData.name && formData.email && formData.message) {
-      console.log('Form submitted:', formData);
+      const subject = encodeURIComponent('ParcelPoint Partnership Inquiry');
+      const body = encodeURIComponent(
+        `Hello ParcelPoint Team,
+
+Name: ${formData.name}
+Email: ${formData.email}
+
+Message:
+${formData.message}
+
+Best regards,
+${formData.name}`
+      );
+
+      const mailtoUrl = `mailto:parcelpointke@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = mailtoUrl;
+
+      // Clear form after opening email client
       setFormData({ name: '', email: '', message: '' });
-      alert('Message sent successfully!');
     } else {
       alert('Please fill in all fields');
     }
@@ -797,7 +826,12 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-300">hello@parcelpoint.co.ke</p>
+                  <a
+                    href="mailto:parcelpointke@gmail.com"
+                    className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+                  >
+                    parcelpointke@gmail.com
+                  </a>
                 </div>
               </div>
 
@@ -807,7 +841,12 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Phone</h3>
-                  <p className="text-gray-600 dark:text-gray-300">+254 700 549 607</p>
+                  <a
+                    href="tel:+254700549607"
+                    className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+                  >
+                    +254 700 549 607
+                  </a>
                 </div>
               </div>
 
@@ -817,7 +856,14 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">WhatsApp</h3>
-                  <p className="text-gray-600 dark:text-gray-300">+254 700 549 607</p>
+                  <a
+                    href="https://wa.me/254700549607"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+                  >
+                    +254 700 549 607
+                  </a>
                 </div>
               </div>
             </div>
@@ -833,7 +879,7 @@ const ContactSection = () => {
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent outline-none transition-colors"
                 />
               </div>
@@ -845,7 +891,7 @@ const ContactSection = () => {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent outline-none transition-colors"
                 />
               </div>
@@ -856,7 +902,7 @@ const ContactSection = () => {
                 </label>
                 <textarea
                   value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent outline-none transition-colors resize-none"
                   placeholder="Tell us about your location and needs..."
@@ -904,7 +950,7 @@ const Footer = () => {
             <h4 className="font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <button 
+                <button
                   onClick={() => {
                     const element = document.querySelector('#home');
                     if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -915,7 +961,7 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => {
                     const element = document.querySelector('#how-it-works');
                     if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -926,7 +972,7 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => {
                     const element = document.querySelector('#services');
                     if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -937,7 +983,7 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button 
+                <button
                   onClick={() => {
                     const element = document.querySelector('#locations');
                     if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -954,8 +1000,22 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">Contact</h4>
             <ul className="space-y-2">
-              <li className="text-gray-400">hello@parcelpoint.co.ke</li>
-              <li className="text-gray-400">+254 700 549 607</li>
+              <li>
+                <a
+                  href="mailto:parcelpointke@gmail.com"
+                  className="text-gray-400 hover:text-emerald-500 transition-colors"
+                >
+                  parcelpointke@gmail.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+254700549607"
+                  className="text-gray-400 hover:text-emerald-500 transition-colors"
+                >
+                  +254 700 549 607
+                </a>
+              </li>
               <li className="text-gray-400">Nairobi, Kenya</li>
             </ul>
           </div>
