@@ -134,17 +134,19 @@ export default function RootLayout({
   return (
     <html lang="en-KE">
       <head>
-        {/* Additional SEO and Performance Meta Tags */}
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
+        <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+        
         <meta name="geo.region" content="KE-30" />
         <meta name="geo.placename" content="Nairobi" />
         <meta name="geo.position" content="-1.2921;36.8219" />
         <meta name="ICBM" content="-1.2921, 36.8219" />
         
-        {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//wa.me" />
         <link rel="dns-prefetch" href="//maps.google.com" />
         
-        {/* Structured Data for Local Business */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
