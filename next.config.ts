@@ -8,8 +8,8 @@ const nextConfig = {
     unoptimized: true,
   },
   
-  basePath: '',
-  assetPrefix: '',
+  basePath: '/parcelpointke',
+  assetPrefix: '/parcelpointke',
   
   compress: true,
   
