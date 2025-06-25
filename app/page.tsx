@@ -796,7 +796,7 @@ Best regards,
 ${formData.name}`
       );
 
-      const mailtoUrl = `mailto:parcelpointke@gmail.com?subject=${subject}&body=${body}`;
+      const mailtoUrl = `mailto:hello@squared.co.ke?subject=${subject}&body=${body}`;
       window.location.href = mailtoUrl;
 
       // Clear form after opening email client
@@ -827,10 +827,10 @@ ${formData.name}`
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
                   <a
-                    href="mailto:parcelpointke@gmail.com"
+                    href="mailto:hello@squared.co.ke"
                     className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
                   >
-                    parcelpointke@gmail.com
+                    hello@squared.co.ke
                   </a>
                 </div>
               </div>
@@ -1002,10 +1002,10 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="mailto:parcelpointke@gmail.com"
+                  href="mailto:hello@squared.co.ke"
                   className="text-gray-400 hover:text-emerald-500 transition-colors"
                 >
-                  parcelpointke@gmail.com
+                  hello@squared.co.ke
                 </a>
               </li>
               <li>
