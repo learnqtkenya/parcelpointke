@@ -523,10 +523,18 @@ const LocationsSection = () => {
     {
       name: "Doonholm",
       address: "Donholm Savannah Rd",
-      status: "Coming Soon",
+      status: "Active",
       hours: "24/7",
       lockers: 15, 
       coordinates: { lat: -1.2990613, lng: 36.8889069 }
+    },
+    {
+      name: "CBD",
+      address: "Kenya National Archives",
+      status: "Coming Soon",
+      hours: "24/7",
+      lockers: 48, 
+      coordinates: { lat: -1.28487, lng: 36.82565  }
     }
   ];
 
