@@ -1029,8 +1029,29 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 ParcelPoint. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            {/* Copyright */}
+            <p className="text-center text-gray-400">
+              &copy; 2024 ParcelPoint. All rights reserved.
+            </p>
+            
+            {/* Legal Links */}
+            <div className="flex space-x-6">
+              <a
+                href="/privacy-policy"
+                className="text-gray-400 hover:text-emerald-500 transition-colors text-sm"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/terms-and-conditions"
+                className="text-gray-400 hover:text-emerald-500 transition-colors text-sm"
+              >
+                Terms & Conditions
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
