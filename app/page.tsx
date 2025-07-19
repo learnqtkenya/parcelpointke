@@ -182,8 +182,8 @@ const HeroSection = () => {
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${index === currentImageIndex
-                        ? 'bg-emerald-500'
-                        : 'bg-white/50 dark:bg-gray-600/50'
+                      ? 'bg-emerald-500'
+                      : 'bg-white/50 dark:bg-gray-600/50'
                       }`}
                   />
                 ))}
@@ -484,8 +484,8 @@ const ServicesSection = () => {
                   window.open(whatsappUrl, '_blank');
                 }}
                 className={`w-full py-4 rounded-xl font-semibold transition-colors ${service.popular
-                    ? 'bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600'
-                    : 'border-2 border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
+                  ? 'bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600'
+                  : 'border-2 border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
                   }`}>
                 {service.cta}
               </button>
@@ -517,7 +517,7 @@ const LocationsSection = () => {
       address: "Thika Road, Nairobi",
       status: "Active",
       hours: "24/7",
-      lockers: 48, 
+      lockers: 48,
       coordinates: { lat: -1.231904, lng: 36.878941 }
     },
     {
@@ -525,7 +525,7 @@ const LocationsSection = () => {
       address: "Donholm Savannah Rd",
       status: "Active",
       hours: "24/7",
-      lockers: 15, 
+      lockers: 15,
       coordinates: { lat: -1.2990613, lng: 36.8889069 }
     },
     {
@@ -533,8 +533,8 @@ const LocationsSection = () => {
       address: "Kenya National Archives",
       status: "Coming Soon",
       hours: "24/7",
-      lockers: 48, 
-      coordinates: { lat: -1.28487, lng: 36.82565  }
+      lockers: 48,
+      coordinates: { lat: -1.28487, lng: 36.82565 }
     }
   ];
 
@@ -588,22 +588,22 @@ const LocationsSection = () => {
               </div>
 
               {location.status === 'Active' && (
-                <button 
-                onClick={() => {
-                  const coordinatesUrl = `https://www.google.com/maps/dir/?api=1&destination=${location.coordinates.lat},${location.coordinates.lng}`;
-                  const fallbackUrl = `https://www.google.com/maps/search/${encodeURIComponent(location.name + ' ' + location.address)}`;
-                  
-                  // Try coordinates first, with fallback option
-                  try {
-                    window.open(coordinatesUrl, '_blank');
-                  } catch (error) {
-                    window.open(fallbackUrl, '_blank');
-                    console.error(error)
-                  }
-                }}
-                className="w-full mt-4 bg-emerald-600 dark:bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium">
-                Get Directions
-              </button>
+                <button
+                  onClick={() => {
+                    const coordinatesUrl = `https://www.google.com/maps/dir/?api=1&destination=${location.coordinates.lat},${location.coordinates.lng}`;
+                    const fallbackUrl = `https://www.google.com/maps/search/${encodeURIComponent(location.name + ' ' + location.address)}`;
+
+                    // Try coordinates first, with fallback option
+                    try {
+                      window.open(coordinatesUrl, '_blank');
+                    } catch (error) {
+                      window.open(fallbackUrl, '_blank');
+                      console.error(error)
+                    }
+                  }}
+                  className="w-full mt-4 bg-emerald-600 dark:bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium">
+                  Get Directions
+                </button>
               )}
             </div>
           ))}
@@ -853,7 +853,7 @@ ${formData.name}`
                     href="tel:+254759777587"
                     className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
                   >
-                    +254 700 549 607
+                    +254 759 777 587
                   </a>
                 </div>
               </div>
@@ -870,7 +870,7 @@ ${formData.name}`
                     rel="noopener noreferrer"
                     className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
                   >
-                    +254 700 549 607
+                    +254 759 777 587
                   </a>
                 </div>
               </div>
@@ -933,6 +933,7 @@ ${formData.name}`
 
 // Footer Component
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-gray-900 dark:bg-black text-gray-300 py-12 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
@@ -1021,7 +1022,7 @@ const Footer = () => {
                   href="tel:+254759777587"
                   className="text-gray-400 hover:text-emerald-500 transition-colors"
                 >
-                  +254 700 549 607
+                  +254 759 777 587
                 </a>
               </li>
               <li className="text-gray-400">Nairobi, Kenya</li>
@@ -1033,9 +1034,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <p className="text-center text-gray-400">
-              &copy; 2024 ParcelPoint. All rights reserved.
+              &copy; {currentYear} ParcelPoint. All rights reserved.
             </p>
-            
+
             {/* Legal Links */}
             <div className="flex space-x-6">
               <a
