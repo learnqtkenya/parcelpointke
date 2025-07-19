@@ -480,7 +480,7 @@ const ServicesSection = () => {
                     default:
                       message = 'Hi ParcelPoint! I\'m interested in learning more about your services and how we can work together.';
                   }
-                  const whatsappUrl = `https://wa.me/254700549607?text=${encodeURIComponent(message)}`;
+                  const whatsappUrl = `https://wa.me/254759777587?text=${encodeURIComponent(message)}`;
                   window.open(whatsappUrl, '_blank');
                 }}
                 className={`w-full py-4 rounded-xl font-semibold transition-colors ${service.popular
@@ -608,7 +608,7 @@ const LocationsSection = () => {
           <button
             onClick={() => {
               const message = 'Hi ParcelPoint! I have a location that would be perfect for your smart lockers. I\'d like to suggest this location and discuss the partnership opportunities. Can we arrange a time to talk?';
-              const whatsappUrl = `https://wa.me/254700549607?text=${encodeURIComponent(message)}`;
+              const whatsappUrl = `https://wa.me/254759777587?text=${encodeURIComponent(message)}`;
               window.open(whatsappUrl, '_blank');
             }}
             className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-3 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-semibold">
@@ -842,7 +842,7 @@ ${formData.name}`
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Phone</h3>
                   <a
-                    href="tel:+254700549607"
+                    href="tel:+254759777587"
                     className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
                   >
                     +254 700 549 607
@@ -857,7 +857,7 @@ ${formData.name}`
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">WhatsApp</h3>
                   <a
-                    href="https://wa.me/254700549607"
+                    href="https://wa.me/254759777587"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
@@ -1010,7 +1010,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="tel:+254700549607"
+                  href="tel:+254759777587"
                   className="text-gray-400 hover:text-emerald-500 transition-colors"
                 >
                   +254 700 549 607

@@ -156,7 +156,7 @@ export default function RootLayout({
               "url": "https://parcelpoint.co.ke",
               "logo": "https://parcelpoint.co.ke/images/parcelpoint/logo.png",
               "image": "https://parcelpoint.co.ke/images/parcelpoint/1.jpeg",
-              "telephone": "+254700549607",
+              "telephone": "+254759777587",
               "email": "hello@parcelpoint.co.ke",
               "address": {
                 "@type": "PostalAddress",
@@ -209,7 +209,7 @@ export default function RootLayout({
                 ]
               },
               "sameAs": [
-                "https://wa.me/254700549607",
+                "https://wa.me/254759777587",
                 "https://twitter.com/ParcelPointKE",
                 "https://facebook.com/ParcelPointKenya",
                 "https://linkedin.com/company/parcelpoint-kenya"
@@ -231,7 +231,7 @@ export default function RootLayout({
               "logo": "https://parcelpoint.co.ke/images/parcelpoint/logo.png",
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+254700549607",
+                "telephone": "+254759777587",
                 "contactType": "customer service",
                 "availableLanguage": ["English", "Swahili"],
                 "areaServed": "KE"
