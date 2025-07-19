@@ -523,10 +523,18 @@ const LocationsSection = () => {
     {
       name: "Doonholm",
       address: "Donholm Savannah Rd",
-      status: "Coming Soon",
+      status: "Active",
       hours: "24/7",
       lockers: 15, 
       coordinates: { lat: -1.2990613, lng: 36.8889069 }
+    },
+    {
+      name: "CBD",
+      address: "Kenya National Archives",
+      status: "Coming Soon",
+      hours: "24/7",
+      lockers: 48, 
+      coordinates: { lat: -1.28487, lng: 36.82565  }
     }
   ];
 
@@ -796,7 +804,7 @@ Best regards,
 ${formData.name}`
       );
 
-      const mailtoUrl = `mailto:parcelpointke@gmail.com?subject=${subject}&body=${body}`;
+      const mailtoUrl = `mailto:hello@squared.co.ke?subject=${subject}&body=${body}`;
       window.location.href = mailtoUrl;
 
       // Clear form after opening email client
@@ -827,10 +835,10 @@ ${formData.name}`
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
                   <a
-                    href="mailto:parcelpointke@gmail.com"
+                    href="mailto:hello@squared.co.ke"
                     className="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
                   >
-                    parcelpointke@gmail.com
+                    hello@squared.co.ke
                   </a>
                 </div>
               </div>
@@ -1002,10 +1010,10 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="mailto:parcelpointke@gmail.com"
+                  href="mailto:hello@squared.co.ke"
                   className="text-gray-400 hover:text-emerald-500 transition-colors"
                 >
-                  parcelpointke@gmail.com
+                  hello@squared.co.ke
                 </a>
               </li>
               <li>
@@ -1021,8 +1029,29 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 ParcelPoint. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            {/* Copyright */}
+            <p className="text-center text-gray-400">
+              &copy; 2024 ParcelPoint. All rights reserved.
+            </p>
+            
+            {/* Legal Links */}
+            <div className="flex space-x-6">
+              <a
+                href="/privacy-policy"
+                className="text-gray-400 hover:text-emerald-500 transition-colors text-sm"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/terms-and-conditions"
+                className="text-gray-400 hover:text-emerald-500 transition-colors text-sm"
+              >
+                Terms & Conditions
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
