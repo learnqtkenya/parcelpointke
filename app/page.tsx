@@ -1087,9 +1087,9 @@ const ParcelPointWebsite = () => {
         <HeroSection />
         <HowItWorksSection />
         <StatsSection />
-        <ServicesSection />
         <LocationsSection />
         <TestimonialsSection />
+        <ServicesSection />
         <FAQSection />
         <ContactSection />
         <Footer />
