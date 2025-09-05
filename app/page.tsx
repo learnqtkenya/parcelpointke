@@ -18,7 +18,9 @@ import {
   Star,
   Mail,
   Phone,
-  MessageCircle
+  MessageCircle,
+  ExternalLink,
+  Users
 } from 'lucide-react';
 
 // Navigation Component
@@ -30,9 +32,10 @@ interface NavItem {
 interface NavigationProps {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
+  mounted: boolean;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme }) => {
+const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme, mounted }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const navItems: NavItem[] = [
@@ -52,7 +55,7 @@ const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme }) => {
   };
 
   return (
-    <nav className="fixed w-full z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-emerald-100 dark:border-gray-800">
+    <nav className="fixed w-full z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -77,22 +80,28 @@ const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme }) => {
                 {item.label}
               </button>
             ))}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
+            {mounted && (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            )}
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
+            {mounted && (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            )}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500"
@@ -238,6 +247,86 @@ const HeroSection = () => {
                 <Smartphone className="h-5 w-5 text-emerald-600 dark:text-emerald-500" />
                 <span>Mobile Payments</span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// CBD Questionnaire Ad Component 
+const CBDQuestionnaireAd: React.FC = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  if (!isVisible) return null;
+
+  return (
+    <section className="relative pt-20 pb-8 bg-gradient-to-r from-emerald-50 via-emerald-100 to-emerald-50 dark:from-emerald-900/20 dark:via-emerald-800/30 dark:to-emerald-900/20 border-b border-emerald-200 dark:border-emerald-800">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Close button */}
+        <button
+          onClick={() => setIsVisible(false)}
+          className="absolute top-24 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 transition-colors z-10"
+          aria-label="Close announcement"
+        >
+          <X className="h-4 w-4" />
+        </button>
+
+        <div className="text-center">
+          {/* Announcement Badge */}
+          <div className="inline-flex items-center gap-2 bg-emerald-600 dark:bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <Users className="h-4 w-4" />
+            NEW LOCATION LAUNCH
+          </div>
+
+          {/* Main Content */}
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+            Coming to <span className="text-emerald-600 dark:text-emerald-500">Nairobi CBD</span>!
+          </h2>
+          
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 max-w-3xl mx-auto">
+            Help us shape ParcelPoint in the heart of Nairobi. 
+            Your input will shape where and how we set up our next smart locker system.
+          </p>
+
+          {/* CTA Section */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSe5HNzjmj8Xkila7p0EIT9au0lsXH7WwLWUiLLC0nOFKO41OA/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-4 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-semibold"
+            >
+              <Users className="h-5 w-5" />
+              Take Quick Survey
+              <ExternalLink className="h-4 w-4" />
+            </a>
+            
+            <div className="text-center sm:text-left">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                <Clock className="h-4 w-4 inline mr-1" />
+                Takes only 2 minutes
+              </p>
+              <p className="text-sm text-emerald-600 dark:text-emerald-500 font-medium">
+                Help shape ParcelPoint&apos;s expansion!
+              </p>
+            </div>
+          </div>
+
+          {/* Benefits */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm max-w-2xl mx-auto">
+            <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+              <MapPin className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
+              <span>Strategic Location Input</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+              <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
+              <span>Community-Driven Choice</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+              <Users className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
+              <span>Early Access Priority</span>
             </div>
           </div>
         </div>
@@ -1059,31 +1148,63 @@ const Footer = () => {
   );
 };
 
-// Main App Component
-const ParcelPointWebsite = () => {
+// Theme Hook
+const useTheme = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('parcelpoint-theme') as 'light' | 'dark' || 'light';
-      setTheme(savedTheme);
-      document.documentElement.className = savedTheme;
-    }
+    setMounted(true);
+    
+    // Get initial theme from data-theme attribute set by the script
+    const dataTheme = document.documentElement.getAttribute('data-theme') as 'light' | 'dark';
+    const initialTheme = (dataTheme === 'dark' || dataTheme === 'light') ? dataTheme : 'light';
+    
+    setTheme(initialTheme);
+    applyThemeToDOM(initialTheme);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('parcelpoint-theme', newTheme);
-    }
-    document.documentElement.className = newTheme;
+  const applyThemeToDOM = (newTheme: 'light' | 'dark') => {
+    const root = document.documentElement;
+    
+    // Remove both classes first, then add the correct one
+    root.classList.remove('light', 'dark');
+    root.classList.add(newTheme);
+    
+    // Set data attribute for CSS selectors
+    root.setAttribute('data-theme', newTheme);
+    
+    // Set color-scheme for browser UI
+    root.style.colorScheme = newTheme;
+    
   };
 
+  const toggleTheme = () => {
+    if (!mounted) return;
+    
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    applyThemeToDOM(newTheme);
+    
+    try {
+      localStorage.setItem('parcelpoint-theme', newTheme);
+    } catch {
+      console.warn('Could not save theme to localStorage');
+    }
+  };
+
+  return { theme, toggleTheme, mounted };
+};
+
+// Main App Component
+const ParcelPointWebsite = () => {
+  const { theme, toggleTheme, mounted } = useTheme();
+
   return (
-    <div className={theme}>
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
-        <Navigation theme={theme} toggleTheme={toggleTheme} />
+    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 overflow-x-hidden">
+        <Navigation theme={theme} toggleTheme={toggleTheme} mounted={mounted} />
+        <CBDQuestionnaireAd />
         <HeroSection />
         <HowItWorksSection />
         <StatsSection />

@@ -132,7 +132,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-KE">
+    <html lang="en-KE" suppressHydrationWarning>
       <head>
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="X-Frame-Options" content="DENY" />
@@ -146,6 +146,25 @@ export default function RootLayout({
         
         <link rel="dns-prefetch" href="//wa.me" />
         <link rel="dns-prefetch" href="//maps.google.com" />
+        
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const saved = localStorage.getItem('parcelpoint-theme');
+                  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  const theme = saved || (systemDark ? 'dark' : 'light');
+                  
+                  document.documentElement.style.setProperty('--initial-theme', theme);
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
+              })();
+            `,
+          }}
+        />
         
         <script
           type="application/ld+json"
