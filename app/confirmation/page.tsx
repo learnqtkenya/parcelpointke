@@ -57,17 +57,17 @@ const ConfirmationPage = () => {
 
           <div className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
             <p className="mb-4">
-              Your message has been received successfully.
+              Your feedback has been received successfully.
             </p>
             <p>
-              We&apos;ll get back to you within 24 hours to discuss your ParcelPoint partnership opportunity.
+              Thank you for helping us understand your parcel storage needs and location preferences.
             </p>
           </div>
 
           {/* What Happens Next */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-emerald-100 dark:border-emerald-900/30 mb-8">
             <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-              What Happens Next?
+              How Your Feedback Helps
             </h2>
 
             <div className="space-y-4 text-left">
@@ -76,8 +76,8 @@ const ConfirmationPage = () => {
                   <span className="text-emerald-600 dark:text-emerald-500 font-bold text-sm">1</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Review Your Inquiry</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Our team will review your location details and partnership preferences.</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Strategic Planning</h3>
+                  <p className="text-gray-600 dark:text-gray-300">Your preferences help us identify the most needed locations for future ParcelPoint sites.</p>
                 </div>
               </div>
 
@@ -86,8 +86,8 @@ const ConfirmationPage = () => {
                   <span className="text-emerald-600 dark:text-emerald-500 font-bold text-sm">2</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Schedule a Call</h3>
-                  <p className="text-gray-600 dark:text-gray-300">We&apos;ll contact you to schedule a convenient time to discuss details.</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Service Development</h3>
+                  <p className="text-gray-600 dark:text-gray-300">Your input guides our service features and pricing to better meet customer needs.</p>
                 </div>
               </div>
 
@@ -96,8 +96,8 @@ const ConfirmationPage = () => {
                   <span className="text-emerald-600 dark:text-emerald-500 font-bold text-sm">3</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Site Assessment</h3>
-                  <p className="text-gray-600 dark:text-gray-300">If suitable, we&apos;ll arrange a site visit to assess location feasibility.</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Launch Notification</h3>
+                  <p className="text-gray-600 dark:text-gray-300">We&apos;ll notify you when ParcelPoint services become available in your preferred area.</p>
                 </div>
               </div>
             </div>
@@ -106,7 +106,7 @@ const ConfirmationPage = () => {
           {/* Contact Information */}
           <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-6 mb-8">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Need Immediate Assistance?
+              Have More Feedback or Questions?
             </h3>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
@@ -158,10 +158,10 @@ const ConfirmationPage = () => {
             </Link>
           </div>
 
-          {/* Expected Response Time */}
+          {/* Thank You Message */}
           <div className="mt-8 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
             <Clock className="h-5 w-5 text-emerald-600 dark:text-emerald-500" />
-            <span className="text-sm">Expected response time: Within 24 hours</span>
+            <span className="text-sm">We appreciate your time and valuable input</span>
           </div>
         </div>
       </main>
