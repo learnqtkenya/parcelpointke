@@ -1,43 +1,28 @@
-@import "tailwindcss";
-
-@theme {
-  --font-family-sans: var(--font-geist-sans), system-ui, sans-serif;
-  --font-family-mono: var(--font-geist-mono), monospace;
-}
-
-/* Configure dark mode to use class strategy */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    color-scheme: dark;
-  }
-}
-
-:root.dark {
-  color-scheme: dark;
-}
-
-:root.light {
-  color-scheme: light;
-}
-
-/* Use data-theme attribute for initial theme to prevent flash */
-:root[data-theme="dark"]:not(.light) {
-  color-scheme: dark;
-}
-
-:root[data-theme="light"]:not(.dark) {
-  color-scheme: light;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Global smooth transitions for theme changes */
-* {
-  transition: background-color 0.2s ease-in-out, 
-              color 0.2s ease-in-out, 
-              border-color 0.2s ease-in-out,
-              box-shadow 0.2s ease-in-out;
-}
+@layer base {
+  :root {
+    color-scheme: light;
+    --font-geist-sans: var(--font-geist-sans);
+    --font-geist-mono: var(--font-geist-mono);
+  }
 
-/* Base body styling */
-body {
-  font-family: var(--font-family-sans);
+  :root.dark {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  html {
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  body {
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
 }

@@ -8,8 +8,6 @@ import {
   MapPin,
   Menu,
   X,
-  Sun,
-  Moon,
   CheckCircle,
   Clock,
   Shield,
@@ -22,6 +20,7 @@ import {
   ExternalLink,
   Users
 } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 // Navigation Component
 interface NavItem {
@@ -29,13 +28,7 @@ interface NavItem {
   href: string;
 }
 
-interface NavigationProps {
-  theme: 'light' | 'dark';
-  toggleTheme: () => void;
-  mounted: boolean;
-}
-
-const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme, mounted }) => {
+const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const navItems: NavItem[] = [
@@ -80,28 +73,12 @@ const Navigation: React.FC<NavigationProps> = ({ theme, toggleTheme, mounted }) 
                 {item.label}
               </button>
             ))}
-            {mounted && (
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              >
-                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </button>
-            )}
+            <ThemeToggle />
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-            {mounted && (
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              >
-                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </button>
-            )}
+            <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-500"
@@ -1226,62 +1203,13 @@ const Footer = () => {
   );
 };
 
-// Theme Hook
-const useTheme = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    
-    // Get initial theme from data-theme attribute set by the script
-    const dataTheme = document.documentElement.getAttribute('data-theme') as 'light' | 'dark';
-    const initialTheme = (dataTheme === 'dark' || dataTheme === 'light') ? dataTheme : 'light';
-    
-    setTheme(initialTheme);
-    applyThemeToDOM(initialTheme);
-  }, []);
-
-  const applyThemeToDOM = (newTheme: 'light' | 'dark') => {
-    const root = document.documentElement;
-    
-    // Remove both classes first, then add the correct one
-    root.classList.remove('light', 'dark');
-    root.classList.add(newTheme);
-    
-    // Set data attribute for CSS selectors
-    root.setAttribute('data-theme', newTheme);
-    
-    // Set color-scheme for browser UI
-    root.style.colorScheme = newTheme;
-    
-  };
-
-  const toggleTheme = () => {
-    if (!mounted) return;
-    
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    applyThemeToDOM(newTheme);
-    
-    try {
-      localStorage.setItem('parcelpoint-theme', newTheme);
-    } catch {
-      console.warn('Could not save theme to localStorage');
-    }
-  };
-
-  return { theme, toggleTheme, mounted };
-};
 
 // Main App Component
 const ParcelPointWebsite = () => {
-  const { theme, toggleTheme, mounted } = useTheme();
-
   return (
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 overflow-x-hidden">
-        <Navigation theme={theme} toggleTheme={toggleTheme} mounted={mounted} />
+        <Navigation />
         <CBDQuestionnaireAd />
         <HeroSection />
         <HowItWorksSection />
