@@ -459,127 +459,205 @@ const StatsSection = () => {
 };
 
 // Services Section
-interface Service {
-  title: string;
-  subtitle: string;
-  price: string;
-  description: string;
-  features: string[];
-  popular: boolean;
-  cta: string;
-}
 
 const ServicesSection = () => {
-  const services: Service[] = [
-    {
-      title: "We Pay You Rent",
-      subtitle: "Hassle-Free Income",
-      price: "Monthly Rent",
-      description: "We handle everything - equipment, maintenance, and operations. You just provide space and earn steady rental income.",
-      features: [
-        "No upfront investment required",
-        "All maintenance included",
-        "Guaranteed monthly payments",
-        "Full operational support"
-      ],
-      popular: true,
-      cta: "Rent My Space"
-    },
-    {
-      title: "Buy & Own Complete",
-      subtitle: "Full Ownership",
-      price: "One-Time Purchase",
-      description: "Purchase the complete system and own it forever. Keep 100% of all revenue and customize as needed.",
-      features: [
-        "Complete system ownership",
-        "100% revenue retention",
-        "White-label branding",
-        "Local data control"
-      ],
-      popular: false,
-      cta: "Get Quote"
-    },
-    {
-      title: "Revenue Partnership",
-      subtitle: "Shared Success",
-      price: "70/30 Split",
-      description: "We manage operations while you provide space and promotion. Share in the revenue with minimal effort.",
-      features: [
-        "No upfront costs",
-        "Shared revenue model",
-        "Full technical support",
-        "Marketing assistance"
-      ],
-      popular: false,
-      cta: "Become Partner"
-    }
-  ];
-
   return (
-    <section id="services" className="py-20 px-4 sm:px-6 bg-emerald-50 dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-            Choose Your Model
+    <section id="services" className="py-12 sm:py-16 bg-white dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl text-gray-900 dark:text-white font-bold mb-4">
+            Partnership Models
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Whether you want rental income, full ownership, or a partnership, we have a solution that fits your needs.
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Choose from three flexible partnership models designed to match your investment capacity and income goals.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className={`relative bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${service.popular ? 'ring-2 ring-emerald-500 dark:ring-emerald-400' : ''}`}>
-              {service.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-6 py-2 rounded-full text-sm font-semibold">
-                  Most Popular
-                </div>
-              )}
+          {/* We Pay You Rent Model */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-600 transition-colors">
+            <div className="mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                We Pay You Rent
+              </h3>
+              <p className="text-emerald-600 dark:text-emerald-500 font-medium">Passive Income | Zero Investment</p>
+            </div>
 
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{service.title}</h3>
-                <p className="text-emerald-600 dark:text-emerald-500 font-semibold mb-4">{service.subtitle}</p>
-                <div className="text-3xl font-bold text-gray-900 dark:text-white">{service.price}</div>
+            <div className="space-y-4 mb-6">
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">How It Works:</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  No investment required. ParcelPoint funds, owns, and manages everything while you receive guaranteed monthly rent.
+                </p>
               </div>
 
-              <p className="text-gray-600 dark:text-gray-300 mb-6 text-center">{service.description}</p>
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Partner Responsibilities:</h4>
+                <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <li>• Provide suitable space for installation</li>
+                  <li>• No financial or operational involvement</li>
+                  <li>• Collect guaranteed monthly rent</li>
+                </ul>
+              </div>
 
-              <ul className="space-y-3 mb-8">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
-                    <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">ParcelPoint Handles:</h4>
+                <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <li>• Purchase, install, and own equipment</li>
+                  <li>• All operations and customer service</li>
+                  <li>• Technology management</li>
+                  <li>• Pay fixed rent consistently</li>
+                </ul>
+              </div>
 
-              <button
-                onClick={() => {
-                  let message = '';
-                  switch (service.title) {
-                    case 'We Pay You Rent':
-                      message = 'Hi ParcelPoint! I have space available and I\'m interested in your rental model where you pay monthly rent. I\'d like to learn more about the requirements and rental rates. Can we discuss this opportunity?';
-                      break;
-                    case 'Buy & Own Complete':
-                      message = 'Hi ParcelPoint! I\'m interested in purchasing a complete ParcelPoint system for full ownership. Could you please provide me with pricing details and what\'s included in the package?';
-                      break;
-                    case 'Revenue Partnership':
-                      message = 'Hi ParcelPoint! I\'m interested in your revenue-sharing partnership model (70/30 split). I have a good location and would like to know more about the requirements and how we can work together.';
-                      break;
-                    default:
-                      message = 'Hi ParcelPoint! I\'m interested in learning more about your services and how we can work together.';
-                  }
-                  const whatsappUrl = `https://wa.me/254759777587?text=${encodeURIComponent(message)}`;
-                  window.open(whatsappUrl, '_blank');
-                }}
-                className={`w-full py-4 rounded-xl font-semibold transition-colors ${service.popular
-                  ? 'bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600'
-                  : 'border-2 border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/30'
-                  }`}>
-                {service.cta}
-              </button>
+              <div className="bg-white dark:bg-gray-900 p-4 rounded-lg">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Income Type:</h4>
+                <div className="text-center">
+                  <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-500">Fixed Monthly Rent</span>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">Income guaranteed and not affected by usage</p>
+              </div>
             </div>
-          ))}
+
+            <button
+              className="w-full bg-gray-900 dark:bg-gray-600 text-white py-3 px-4 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-500 transition-colors font-medium"
+              onClick={() => window.open('https://wa.me/254759777587?text=I\'m interested in your "We Pay You Rent" model where I receive guaranteed monthly rent with zero investment. I\'d like to learn more about the requirements and rental rates.', '_blank')}
+            >
+              Rent My Space
+            </button>
+          </div>
+
+          {/* Managed Service Partnership Model */}
+          <div className="bg-emerald-50 dark:bg-gray-800 rounded-xl p-6 sm:p-8 border-2 border-emerald-200 dark:border-emerald-700 relative">
+            <div className="absolute top-4 right-4 bg-emerald-600 dark:bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              Most Popular
+            </div>
+            <div className="mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Managed Service Partnership
+              </h3>
+              <p className="text-emerald-600 dark:text-emerald-500 font-medium">Premium Partnership | High Returns</p>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">How It Works:</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Own the locker equipment as a valuable asset while ParcelPoint handles operations. Earn majority revenue with equity building.
+                </p>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Investment Required:</h4>
+                <div className="text-center">
+                  <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">KES 150k - 500k</span>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">Depending on size and number of compartments</p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Partner Responsibilities:</h4>
+                <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <li>• Invest upfront in locker equipment</li>
+                  <li>• Pay monthly management fee + small revenue share</li>
+                  <li>• Provide space for installation</li>
+                  <li>• Enjoy majority revenue share and long-term asset value</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">ParcelPoint Handles:</h4>
+                <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <li>• Daily operations and customer service</li>
+                  <li>• Platform, brand access, and system updates</li>
+                  <li>• Technology management</li>
+                  <li>• Service reliability and customer satisfaction</li>
+                </ul>
+              </div>
+
+              <div className="bg-emerald-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Your Benefits:</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  <strong>Own equipment as asset + Earn majority of transaction revenue + Build long-term equity</strong>
+                </p>
+              </div>
+            </div>
+
+            <button
+              className="w-full bg-emerald-600 dark:bg-emerald-500 text-white py-3 px-4 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium"
+              onClick={() => window.open('https://wa.me/254759777587?text=I\'m interested in your Managed Service Partnership where I can invest in the locker equipment and earn majority revenue while building equity. Could you please provide pricing details and expected returns?', '_blank')}
+            >
+              Get Quote
+            </button>
+          </div>
+
+          {/* Revenue Partnership Model */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-600 transition-colors">
+            <div className="mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Revenue Partnership
+              </h3>
+              <p className="text-emerald-600 dark:text-emerald-500 font-medium">Shared Growth | Performance-Based</p>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">How It Works:</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  No upfront investment required. Earn through revenue sharing based on transactions with local promotion opportunities.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Partner Responsibilities:</h4>
+                <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <li>• Provide space for installation</li>
+                  <li>• Promote the service locally to boost usage</li>
+                  <li>• Earn a percentage of transaction revenue</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">ParcelPoint Handles:</h4>
+                <ul className="text-gray-600 dark:text-gray-300 text-sm space-y-1">
+                  <li>• Fund and install the locker equipment</li>
+                  <li>• Operate lockers under ParcelPoint brand</li>
+                  <li>• Technology, service, and customer support</li>
+                  <li>• Share revenue with transparency</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Income Type:</h4>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">Revenue Sharing</div>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">Growth-focused, performance-based income</p>
+                </div>
+              </div>
+            </div>
+
+            <button
+              className="w-full bg-blue-600 dark:bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium"
+              onClick={() => window.open('https://wa.me/254759777587?text=I\'m interested in your Revenue Partnership model with performance-based income sharing. I have a good location and would like to know more about the revenue split and promotion requirements.', '_blank')}
+            >
+              Become Partner
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Not sure which partnership model is right for you? We'll help you choose the best option based on your investment capacity and income goals.
+          </p>
+          <button
+            className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-3 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium inline-flex items-center gap-2"
+            onClick={() => window.open('https://wa.me/254759777587?text=I\'m interested in ParcelPoint and would like to discuss the different partnership models to find the best fit for my needs.', '_blank')}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            Get Free Consultation
+          </button>
         </div>
       </div>
     </section>
