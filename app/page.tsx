@@ -36,14 +36,21 @@ const Navigation: React.FC = () => {
     { label: 'How It Works', href: '#how-it-works' },
     { label: 'Services', href: '#services' },
     { label: 'Locations', href: '#locations' },
+    { label: 'All Lockers', href: '/lockers' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' }
   ];
 
   const handleNavClick = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/')) {
+      // External link
+      window.location.href = href;
+    } else {
+      // Internal anchor
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
