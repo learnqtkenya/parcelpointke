@@ -33,6 +33,7 @@ const Navigation: React.FC = () => {
 
   const navItems: NavItem[] = [
     { label: 'Home', href: '#home' },
+    { label: 'Book Locker', href: '/booking' },
     { label: 'How It Works', href: '#how-it-works' },
     { label: 'Services', href: '#services' },
     { label: 'Locations', href: '#locations' },
@@ -198,22 +199,19 @@ const HeroSection = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <button
+                onClick={() => window.location.href = '/booking'}
+                className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-4 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-semibold text-center"
+              >
+                Book Now
+              </button>
+              <button
                 onClick={() => {
                   const element = document.querySelector('#locations');
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-4 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-semibold text-center"
-              >
-                Find Locations
-              </button>
-              <button
-                onClick={() => {
-                  const element = document.querySelector('#how-it-works');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }}
                 className="border-2 border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 px-8 py-4 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors text-lg font-semibold text-center"
               >
-                How It Works
+                Find Locations
               </button>
             </div>
 
