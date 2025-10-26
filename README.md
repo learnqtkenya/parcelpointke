@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ParcelPoint Kenya
 
-## Getting Started
+A modern, responsive website for ParcelPoint smart locker service in Kenya. Built with Next.js and deployed as a static site on GitHub Pages with real backend API integration.
 
-First, run the development server:
+## Features
 
+- Real-time locker availability from backend API
+- M-PESA payment integration
+- Dark mode support
+- Mobile-responsive design
+- SEO optimized
+- Static site generation for GitHub Pages
+
+## Tech Stack
+
+- Next.js 15.3.4
+- React 19
+- TypeScript
+- Tailwind CSS
+- Lucide React Icons
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18 or higher
+- npm or yarn
+
+### Local Development
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd parcelpointke
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.local.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit `.env.local` with your development API credentials.
 
-## Learn More
+4. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Backend API Integration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project integrates with the SquaredWS backend API for:
+- Real-time device and locker availability
+- Booking validation
+- M-PESA payment processing
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site is configured for automatic deployment to GitHub Pages.
+
+### GitHub Secrets Setup
+
+Add these secrets in your repository settings:
+
+- `NEXT_PUBLIC_API_BASE_URL` - Backend API URL
+- `NEXT_PUBLIC_API_KEY` - API authentication key
+- `NEXT_PUBLIC_API_VERSION` - API version (default: v1)
+
+### Deploy
+
+Push to the `main` branch to trigger automatic deployment:
+
+```bash
+git push origin main
+```
+
+
+## Project Structure
+
+```
+parcelpointke/
+├── app/                    # Next.js app directory
+│   ├── booking/           # Booking page with API integration
+│   └── page.tsx           # Homepage
+├── components/            # React components
+├── lib/
+│   └── api/              # API client and services
+│       ├── client.ts     # HTTP client with auth
+│       ├── types.ts      # TypeScript types
+│       └── services.ts   # API service functions
+├── public/               # Static assets
+└── .github/
+    └── workflows/        # GitHub Actions CI/CD
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Test locally
+4. Submit a pull request
+
+## License
+
+All rights reserved - ParcelPoint Kenya
+
+## Support
+
+For issues or questions, contact: hello@squared.co.ke

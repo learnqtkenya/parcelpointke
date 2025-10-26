@@ -1,15 +1,18 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MapPin,
   Package,
   CheckCircle,
   ArrowLeft,
   Calculator,
-  Smartphone
+  Smartphone,
+  AlertCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import { getDevicesOverview, checkExistingBooking, initiateBookingPayment } from '@/lib/api/services';
+import type { DeviceOverview } from '@/lib/api/types';
 
 interface Location {
   id: string;
@@ -44,32 +47,72 @@ const lockerSizes: LockerSize[] = [
   }
 ];
 
-const locations: Location[] = [
-  {
-    id: 'garden-city',
-    name: "Garden City Mall",
-    address: "Thika Road, Nairobi",
-    coordinates: { lat: -1.231904, lng: 36.878941 },
-    isActive: true,
-    available: { small: 12, medium: 8, large: 3 }
-  },
-  {
-    id: 'doonholm',
-    name: "Doonholm",
-    address: "Donholm Savannah Rd",
-    coordinates: { lat: -1.2990613, lng: 36.8889069 },
-    isActive: true,
-    available: { small: 5, medium: 3, large: 1 }
-  }
-];
-
 export default function BookingPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [locationId, setLocationId] = useState('');
   const [lockerSize, setLockerSize] = useState('medium');
   const [hours, setHours] = useState(24);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  // Load devices overview on component mount
+  useEffect(() => {
+    loadDevicesOverview();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const loadDevicesOverview = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const devicesData = await getDevicesOverview();
+
+      const transformedLocations: Location[] = devicesData
+        .filter(device => device.status === 0) // Only active devices
+        .map(device => ({
+          id: device.id,
+          name: device.name,
+          address: getDeviceAddress(device),
+          coordinates: {
+            lat: device.location?.latitude || 0,
+            lng: device.location?.longitude || 0
+          },
+          isActive: device.status === 0,
+          available: {
+            small: device.locker_metrics.small.available,
+            medium: device.locker_metrics.medium.available,
+            large: device.locker_metrics.large.available
+          }
+        }));
+
+      setLocations(transformedLocations);
+    } catch (err) {
+      console.error('Failed to load devices:', err);
+      setError('Failed to load available locations. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Helper function to extract address from device name or use a default
+  const getDeviceAddress = (device: DeviceOverview): string => {
+    const addressMap: Record<string, string> = {
+      'Garden City': 'Thika Road, Nairobi',
+      'Doonholm': 'Donholm Savannah Rd',
+      'CBD': 'Kenya National Archives',
+    };
+
+    for (const [key, value] of Object.entries(addressMap)) {
+      if (device.name.includes(key)) {
+        return value;
+      }
+    }
+
+    return 'Nairobi, Kenya';
+  };
 
   const calculateTotalCost = () => {
     return 50 + Math.max(0, hours - 1) * 10;
@@ -77,18 +120,35 @@ export default function BookingPage() {
 
   const handleBookingSubmit = async () => {
     setIsSubmitting(true);
-    const bookingData = {
-      locationId,
-      lockerSize,
-      hours,
-      phoneNumber,
-      totalCost: calculateTotalCost()
-    };
-    console.log('Booking submitted:', bookingData);
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      // Step 1: Check if user already has a booking
+      const existingBooking = await checkExistingBooking(locationId, phoneNumber);
+
+      if (existingBooking) {
+        setError('You already have an active booking. Please collect your parcel before making a new booking.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Step 2: Initiate payment
+      await initiateBookingPayment(
+        locationId,
+        phoneNumber,
+        calculateTotalCost(),
+        lockerSize as 'small' | 'medium' | 'large',
+        hours
+      );
+
+      // Move to confirmation step
       setCurrentStep(3);
+    } catch (err) {
+      console.error('Booking submission failed:', err);
+      setError(err instanceof Error ? err.message : 'Failed to initiate payment. Please try again.');
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+    }
   };
 
   const isStepValid = () => {
@@ -154,6 +214,25 @@ export default function BookingPage() {
           </div>
           <StepIndicator />
           <StepLabels />
+
+          {error && (
+            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <div>
+                  <p className="text-red-800 dark:text-red-200 font-medium">Error</p>
+                  <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+                </div>
+              </div>
+              <button
+                onClick={loadDevicesOverview}
+                className="mt-3 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium"
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Select Location & Locker Size</h2>
@@ -161,9 +240,18 @@ export default function BookingPage() {
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                   Choose ParcelPoint Location
                 </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {locations.filter(loc => loc.isActive).map((location) => (
-                    <button
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+                  </div>
+                ) : locations.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    No locations available at the moment. Please try again later.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {locations.filter(loc => loc.isActive).map((location) => (
+                      <button
                       key={location.id}
                       onClick={() => setLocationId(location.id)}
                       className={`p-4 rounded-xl border-2 text-left transition-all ${
@@ -196,9 +284,10 @@ export default function BookingPage() {
                           <div className="text-green-600">{location.available.large} available</div>
                         </div>
                       </div>
-                    </button>
-                  ))}
-                </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               {locationId && (
                 <div>
@@ -280,6 +369,19 @@ export default function BookingPage() {
           </div>
           <StepIndicator />
           <StepLabels />
+
+          {error && (
+            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <div>
+                  <p className="text-red-800 dark:text-red-200 font-medium">Error</p>
+                  <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Duration & Payment</h2>
