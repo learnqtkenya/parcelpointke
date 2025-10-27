@@ -56,6 +56,7 @@ export default function BookingPage() {
   const [lockerSize, setLockerSize] = useState('medium');
   const [hours, setHours] = useState(24);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [locations, setLocations] = useState<Location[]>([]);
 
   // Load devices overview on component mount
@@ -118,13 +119,51 @@ export default function BookingPage() {
     return 50 + Math.max(0, hours - 1) * 10;
   };
 
+  const formatPhoneNumber = (input: string): string => {
+    const cleaned = input.replace(/\D/g, '');
+
+    if (cleaned.startsWith('0')) {
+      return '254' + cleaned.substring(1);
+    }
+
+    if (cleaned.startsWith('254')) {
+      return cleaned;
+    }
+
+    if (cleaned.startsWith('7') || cleaned.startsWith('1')) {
+      return '254' + cleaned;
+    }
+
+    return cleaned;
+  };
+
+  const validatePhoneNumber = (phone: string): boolean => {
+    const formatted = formatPhoneNumber(phone);
+    const phoneRegex = /^254[71]\d{8}$/;
+    return phoneRegex.test(formatted);
+  };
+
+  const handlePhoneChange = (value: string) => {
+    setPhoneNumber(value);
+    setPhoneError(null);
+  };
+
   const handleBookingSubmit = async () => {
     setIsSubmitting(true);
     setError(null);
+    setPhoneError(null);
+
+    const formattedPhone = formatPhoneNumber(phoneNumber);
+
+    if (!validatePhoneNumber(phoneNumber)) {
+      setPhoneError('Please enter a valid Kenyan phone number (07XX XXX XXX or 254XXX XXX XXX)');
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       // Step 1: Check if user already has a booking
-      const existingBooking = await checkExistingBooking(locationId, phoneNumber);
+      const existingBooking = await checkExistingBooking(locationId, formattedPhone);
 
       if (existingBooking) {
         setError('You already have an active booking. Please collect your parcel before making a new booking.');
@@ -132,10 +171,10 @@ export default function BookingPage() {
         return;
       }
 
-      // Step 2: Initiate payment
+      // Step 2: Initiate payment with formatted phone number
       await initiateBookingPayment(
         locationId,
-        phoneNumber,
+        formattedPhone,
         calculateTotalCost(),
         lockerSize as 'small' | 'medium' | 'large',
         hours
@@ -156,7 +195,7 @@ export default function BookingPage() {
       case 1:
         return locationId && lockerSize;
       case 2:
-        return phoneNumber && hours > 0;
+        return phoneNumber && hours > 0 && validatePhoneNumber(phoneNumber);
       default:
         return true;
     }
@@ -443,14 +482,24 @@ export default function BookingPage() {
                     name="phone"
                     type="tel"
                     value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                    placeholder="+254 7XX XXX XXX"
+                    onChange={(e) => handlePhoneChange(e.target.value)}
+                    className={`w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none ${
+                      phoneError
+                        ? 'border-red-500 dark:border-red-500'
+                        : 'border-gray-300 dark:border-gray-600'
+                    }`}
+                    placeholder="0712 345 678 or 254712 345 678"
                     autoComplete="tel"
                   />
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                    You'll receive STK push and booking code via SMS
-                  </p>
+                  {phoneError ? (
+                    <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                      {phoneError}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      You'll receive STK push and booking code via SMS
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="mt-4">
@@ -459,7 +508,7 @@ export default function BookingPage() {
                     <div>
                       <h4 className="font-semibold text-green-900 dark:text-green-100">Ready to Pay</h4>
                       <p className="text-sm text-green-800 dark:text-green-200">
-                        STK push will be sent to {phoneNumber || 'your phone number'}
+                        STK push will be sent to {phoneNumber ? formatPhoneNumber(phoneNumber) : 'your phone number'}
                       </p>
                     </div>
                     <Smartphone className="h-8 w-8 text-green-600" />
@@ -535,7 +584,7 @@ export default function BookingPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="font-semibold text-blue-600 mr-2">3.</span>
-                  <span>You'll receive your 6-digit booking code via SMS immediately</span>
+                  <span>You'll receive your 6-digit booking code via SMS to {formatPhoneNumber(phoneNumber)}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="font-semibold text-blue-600 mr-2">4.</span>
