@@ -207,8 +207,8 @@ function BookingPageContent() {
           return;
         }
 
-        if (booking.status !== 0) {
-          setError('This booking is no longer active.');
+        if (booking.status === 2) {
+          setError('This booking has expired and cannot be extended.');
           setIsSubmitting(false);
           return;
         }
