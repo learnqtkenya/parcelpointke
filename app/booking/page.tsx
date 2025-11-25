@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import {
   MapPin,
   Package,
@@ -8,10 +8,12 @@ import {
   ArrowLeft,
   Calculator,
   Smartphone,
-  AlertCircle
+  AlertCircle,
+  Clock as ClockIcon
 } from 'lucide-react';
 import Link from 'next/link';
-import { getDevicesOverview, checkExistingBooking, initiateBookingPayment } from '@/lib/api/services';
+import { useSearchParams } from 'next/navigation';
+import { getDevicesOverview, checkExistingBooking, initiateBookingPayment, getBookingDetails, initiateExtensionPayment, decodeExtensionUrl } from '@/lib/api/services';
 import type { DeviceOverview } from '@/lib/api/types';
 
 interface Location {
@@ -47,21 +49,49 @@ const lockerSizes: LockerSize[] = [
   }
 ];
 
-export default function BookingPage() {
-  const [currentStep, setCurrentStep] = useState(1);
+function BookingPageContent() {
+  const searchParams = useSearchParams();
+
+  let isExtensionMode = false;
+  let extensionDeviceId: string | null = null;
+  let extensionLockerId: string | null = null;
+
+  const extParam = searchParams.get('ext');
+  if (extParam) {
+    const decoded = decodeExtensionUrl(extParam);
+    if (decoded) {
+      isExtensionMode = true;
+      extensionDeviceId = decoded.deviceId;
+      extensionLockerId = decoded.lockerId;
+    }
+  } else {
+    isExtensionMode = searchParams.get('extend') === 'true';
+    extensionDeviceId = searchParams.get('device');
+    extensionLockerId = searchParams.get('locker');
+  }
+
+  const [currentStep, setCurrentStep] = useState(isExtensionMode ? 2 : 1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [locationId, setLocationId] = useState('');
+  const [locationId, setLocationId] = useState(extensionDeviceId || '');
   const [lockerSize, setLockerSize] = useState('medium');
   const [hours, setHours] = useState(24);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [locations, setLocations] = useState<Location[]>([]);
 
-  // Load devices overview on component mount
   useEffect(() => {
-    loadDevicesOverview();
+    if (isExtensionMode) {
+      if (!extensionDeviceId || !extensionLockerId) {
+        setError('Invalid extension link. Missing device or locker information.');
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    } else {
+      loadDevicesOverview();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -162,25 +192,51 @@ export default function BookingPage() {
     }
 
     try {
-      // Step 1: Check if user already has a booking
-      const existingBooking = await checkExistingBooking(locationId, formattedPhone);
+      if (isExtensionMode && extensionDeviceId && extensionLockerId) {
+        const booking = await getBookingDetails(extensionDeviceId, formattedPhone);
 
-      if (existingBooking) {
-        setError('You already have an active booking. Please collect your parcel before making a new booking.');
-        setIsSubmitting(false);
-        return;
+        if (!booking) {
+          setError('No active booking found for this phone number.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        if (booking.locker_id !== parseInt(extensionLockerId)) {
+          setError('Booking does not match the specified locker.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        if (booking.status === 2) {
+          setError('This booking has expired and cannot be extended.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        await initiateExtensionPayment(
+          extensionDeviceId,
+          parseInt(extensionLockerId),
+          formattedPhone,
+          calculateTotalCost()
+        );
+      } else {
+        const existingBooking = await checkExistingBooking(locationId, formattedPhone);
+
+        if (existingBooking) {
+          setError('You already have an active booking. Please collect your parcel before making a new booking.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        await initiateBookingPayment(
+          locationId,
+          formattedPhone,
+          calculateTotalCost(),
+          lockerSize as 'small' | 'medium' | 'large',
+          hours
+        );
       }
 
-      // Step 2: Initiate payment with formatted phone number
-      await initiateBookingPayment(
-        locationId,
-        formattedPhone,
-        calculateTotalCost(),
-        lockerSize as 'small' | 'medium' | 'large',
-        hours
-      );
-
-      // Move to confirmation step
       setCurrentStep(3);
     } catch (err) {
       console.error('Booking submission failed:', err);
@@ -201,36 +257,72 @@ export default function BookingPage() {
     }
   };
 
-  const StepIndicator = () => (
-    <div className="flex items-center justify-center mb-8">
-      {[1, 2, 3].map((step) => (
-        <div key={step} className="flex items-center">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-            step <= currentStep ? 'bg-emerald-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
-          }`}>
-            {step < currentStep ? <CheckCircle className="h-6 w-6" /> : step}
-          </div>
-          {step < 3 && (
-            <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
-          )}
+  const StepIndicator = () => {
+    if (isExtensionMode) {
+      return (
+        <div className="flex items-center justify-center mb-8">
+          {[2, 3].map((step, index) => (
+            <div key={step} className="flex items-center">
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+                step <= currentStep ? 'bg-emerald-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+              }`}>
+                {step < currentStep ? <CheckCircle className="h-6 w-6" /> : index + 1}
+              </div>
+              {index < 1 && (
+                <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
+              )}
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  );
+      );
+    }
 
-  const StepLabels = () => (
-    <div className="grid grid-cols-3 gap-4 mb-12 text-center text-sm">
-      <div className={currentStep >= 1 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
-        Location & Size
+    return (
+      <div className="flex items-center justify-center mb-8">
+        {[1, 2, 3].map((step) => (
+          <div key={step} className="flex items-center">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
+              step <= currentStep ? 'bg-emerald-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+            }`}>
+              {step < currentStep ? <CheckCircle className="h-6 w-6" /> : step}
+            </div>
+            {step < 3 && (
+              <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
+            )}
+          </div>
+        ))}
       </div>
-      <div className={currentStep >= 2 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
-        Duration & Payment
+    );
+  };
+
+  const StepLabels = () => {
+    if (isExtensionMode) {
+      return (
+        <div className="grid grid-cols-2 gap-4 mb-12 text-center text-sm">
+          <div className={currentStep >= 2 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+            Duration & Payment
+          </div>
+          <div className={currentStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+            Confirmation
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-3 gap-4 mb-12 text-center text-sm">
+        <div className={currentStep >= 1 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+          Location & Size
+        </div>
+        <div className={currentStep >= 2 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+          Duration & Payment
+        </div>
+        <div className={currentStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+          Confirmation
+        </div>
       </div>
-      <div className={currentStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
-        Confirmation
-      </div>
-    </div>
-  );
+    );
+  };
 
   if (currentStep === 1) {
     return (
@@ -400,10 +492,12 @@ export default function BookingPage() {
               Back to Home
             </Link>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              Book a Locker
+              {isExtensionMode ? 'Extend Your Booking' : 'Book a Locker'}
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Secure your package storage in just a few simple steps
+              {isExtensionMode
+                ? 'Add more time to your current booking'
+                : 'Secure your package storage in just a few simple steps'}
             </p>
           </div>
           <StepIndicator />
@@ -423,10 +517,25 @@ export default function BookingPage() {
 
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Duration & Payment</h2>
+              {isExtensionMode && (
+                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <ClockIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-blue-800 dark:text-blue-200 font-medium">Extending Booking</p>
+                      <p className="text-blue-700 dark:text-blue-300 text-sm">
+                        You are extending your booking for Locker #{extensionLockerId}. Enter your phone number to verify and select extension duration.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                {isExtensionMode ? 'Extension Duration & Payment' : 'Duration & Payment'}
+              </h2>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                  Booking Duration (Hours)
+                  {isExtensionMode ? 'Extension Duration (Hours)' : 'Booking Duration (Hours)'}
                 </label>
                 <div className="flex items-center space-x-4 mb-4">
                   <input
@@ -497,7 +606,9 @@ export default function BookingPage() {
                     </p>
                   ) : (
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      You'll receive STK push and booking code via SMS
+                      {isExtensionMode
+                        ? "You'll receive STK push to extend your booking"
+                        : "You'll receive STK push and booking code via SMS"}
                     </p>
                   )}
                 </div>
@@ -523,14 +634,16 @@ export default function BookingPage() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <button
-                onClick={() => setCurrentStep(1)}
-                className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition-colors"
-              >
-                Previous
-              </button>
-            </div>
+            {!isExtensionMode && (
+              <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <button
+                  onClick={() => setCurrentStep(1)}
+                  className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition-colors"
+                >
+                  Previous
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -550,10 +663,12 @@ export default function BookingPage() {
             Back to Home
           </Link>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            Book a Locker
+            {isExtensionMode ? 'Extend Your Booking' : 'Book a Locker'}
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            Secure your package storage in just a few simple steps
+            {isExtensionMode
+              ? 'Add more time to your current booking'
+              : 'Secure your package storage in just a few simple steps'}
           </p>
         </div>
         <StepIndicator />
@@ -568,29 +683,52 @@ export default function BookingPage() {
                 STK Push Sent!
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                Complete payment on your phone to receive your booking code
+                {isExtensionMode
+                  ? 'Complete payment on your phone to extend your booking'
+                  : 'Complete payment on your phone to receive your booking code'}
               </p>
             </div>
             <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-left">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Next Steps</h3>
-              <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
-                <li className="flex items-start">
-                  <span className="font-semibold text-blue-600 mr-2">1.</span>
-                  <span>Check your phone for M-PESA STK push notification</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-semibold text-blue-600 mr-2">2.</span>
-                  <span>Enter your M-PESA PIN to complete payment of KES {calculateTotalCost()}</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-semibold text-blue-600 mr-2">3.</span>
-                  <span>You'll receive your 6-digit booking code via SMS to {formatPhoneNumber(phoneNumber)}</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-semibold text-blue-600 mr-2">4.</span>
-                  <span>Use the code at {locations.find(loc => loc.id === locationId)?.name} for {hours} hours</span>
-                </li>
-              </ol>
+              {isExtensionMode ? (
+                <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">1.</span>
+                    <span>Check your phone for M-PESA STK push notification</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">2.</span>
+                    <span>Enter your M-PESA PIN to complete payment of KES {calculateTotalCost()}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">3.</span>
+                    <span>Your booking for Locker #{extensionLockerId} will be extended by {hours} hours</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">4.</span>
+                    <span>You'll receive a confirmation SMS to {formatPhoneNumber(phoneNumber)}</span>
+                  </li>
+                </ol>
+              ) : (
+                <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">1.</span>
+                    <span>Check your phone for M-PESA STK push notification</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">2.</span>
+                    <span>Enter your M-PESA PIN to complete payment of KES {calculateTotalCost()}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">3.</span>
+                    <span>You'll receive your 6-digit booking code via SMS to {formatPhoneNumber(phoneNumber)}</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-semibold text-blue-600 mr-2">4.</span>
+                    <span>Use the code at {locations.find(loc => loc.id === locationId)?.name} for {hours} hours</span>
+                  </li>
+                </ol>
+              )}
             </div>
             <div className="text-center">
               <Link
@@ -605,5 +743,17 @@ export default function BookingPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BookingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+      </div>
+    }>
+      <BookingPageContent />
+    </Suspense>
   );
 }
