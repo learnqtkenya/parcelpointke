@@ -52,17 +52,17 @@ export default function DevelopersPage() {
     responseExample?: string;
     queryParams?: { name: string; type: string; description: string; required?: boolean }[];
   }) => (
-    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-4">
-      <div className="flex items-start gap-4 mb-2">
-        <span className={`px-3 py-1 rounded text-sm font-semibold ${method === 'GET' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' :
-            method === 'POST' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' :
-              method === 'PUT' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300' :
+    <div className="border border-gray-200 dark:border-gray-700 rounded-xl p-5 mb-4 bg-white dark:bg-gray-800/50 shadow-md hover:shadow-lg transition-shadow">
+      <div className="flex items-start gap-4 mb-2 flex-wrap">
+        <span className={`px-3 py-1 rounded-lg text-sm font-semibold shadow-sm ${method === 'GET' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300' :
+            method === 'POST' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300' :
+              method === 'PUT' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300' :
                 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
           }`}>
           {method}
         </span>
-        <code className="text-sm flex-1 font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">{path}</code>
-        <span className="px-2 py-1 text-xs bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded">
+        <code className="text-sm flex-1 font-mono bg-gray-100 dark:bg-gray-900 px-3 py-1.5 rounded-lg">{path}</code>
+        <span className="px-3 py-1 text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 rounded-lg font-medium shadow-sm">
           {auth}
         </span>
       </div>
@@ -104,16 +104,16 @@ export default function DevelopersPage() {
     <div className="mb-6">
       <button
         onClick={() => toggleSection(id)}
-        className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        className="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl hover:bg-emerald-50 dark:hover:bg-gray-700 transition-all shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700"
       >
         <div className="flex items-center gap-3">
-          <Icon className="text-blue-600 dark:text-blue-400" size={24} />
+          <Icon className="text-emerald-600 dark:text-emerald-400" size={24} />
           <h2 className="text-xl font-bold">{title}</h2>
         </div>
-        {openSection === id ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+        {openSection === id ? <ChevronDown size={20} className="text-emerald-600 dark:text-emerald-400" /> : <ChevronRight size={20} className="text-emerald-600 dark:text-emerald-400" />}
       </button>
       {openSection === id && (
-        <div className="mt-4 pl-4 border-l-4 border-blue-500">
+        <div className="mt-4 pl-4 border-l-4 border-emerald-500 dark:border-emerald-600">
           {children}
         </div>
       )}
@@ -121,23 +121,25 @@ export default function DevelopersPage() {
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-white dark:from-gray-900 to-emerald-50 dark:to-emerald-950 text-gray-900 dark:text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+      <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 dark:from-emerald-700 dark:to-emerald-900 text-white py-16 shadow-xl">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
-            <Book size={48} />
+            <div className="bg-white/20 backdrop-blur-sm p-3 rounded-2xl">
+              <Book size={40} />
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold">Integration Documentation</h1>
           </div>
-          <p className="text-xl text-blue-100">Learn how to integrate ParcelPoint smart locker services</p>
+          <p className="text-xl text-emerald-50">Learn how to integrate ParcelPoint smart locker services</p>
           <div className="mt-6 flex flex-wrap gap-4">
-            <div className="bg-white/10 backdrop-blur px-4 py-2 rounded-lg">
-              <div className="text-sm text-blue-100">Base URL</div>
-              <code className="text-white font-mono">{baseUrl}</code>
+            <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20 shadow-lg">
+              <div className="text-sm text-emerald-100 font-medium">Base URL</div>
+              <code className="text-white font-mono text-sm">{baseUrl}</code>
             </div>
-            <div className="bg-white/10 backdrop-blur px-4 py-2 rounded-lg">
-              <div className="text-sm text-blue-100">Version</div>
-              <code className="text-white font-mono">v1</code>
+            <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/20 shadow-lg">
+              <div className="text-sm text-emerald-100 font-medium">Version</div>
+              <code className="text-white font-mono text-sm">v1</code>
             </div>
           </div>
         </div>
@@ -148,13 +150,13 @@ export default function DevelopersPage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Navigation */}
           <aside className="lg:w-64 shrink-0">
-            <nav className="sticky top-4 space-y-2">
+            <nav className="sticky top-4 space-y-3">
               <button
                 onClick={() => setActiveTab('process')}
-                className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                className={`w-full text-left px-4 py-3 rounded-xl transition-all shadow-md hover:shadow-lg ${
                   activeTab === 'process'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-emerald-600 dark:bg-emerald-600 text-white'
+                    : 'bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -165,10 +167,10 @@ export default function DevelopersPage() {
               </button>
               <button
                 onClick={() => setActiveTab('integration')}
-                className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                className={`w-full text-left px-4 py-3 rounded-xl transition-all shadow-md hover:shadow-lg ${
                   activeTab === 'integration'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-emerald-600 dark:bg-emerald-600 text-white'
+                    : 'bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -191,10 +193,10 @@ export default function DevelopersPage() {
 
                 {/* Step 1: Create Reservations */}
                 <div className="mb-8">
-                  <div className="bg-blue-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                  <div className="bg-emerald-600 dark:bg-emerald-700 text-white inline-block px-5 py-2 rounded-xl mb-4 shadow-md">
                     <h3 className="text-xl font-bold">Step 1: Create Locker Reservations</h3>
                   </div>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
                     <p className="mb-4">
                       Your organization uses the ParcelPoint API to reserve lockers at specific devices. When you create a reservation via API:
                     </p>
@@ -205,7 +207,7 @@ export default function DevelopersPage() {
                       <li>The specified quantity of lockers for that size becomes <strong>reserved</strong> and unavailable to the public</li>
                       <li>Your organization can now use these reserved lockers exclusively</li>
                     </ul>
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mt-4">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 mt-4">
                       <p className="text-sm">
                         <strong>Example:</strong> If you reserve 10 small lockers at Device DEV001 until end of month, those 10 small compartments are marked as reserved on the device and can only be used by your carriers.
                       </p>
@@ -215,16 +217,16 @@ export default function DevelopersPage() {
 
                 {/* Step 2: Carrier Setup */}
                 <div className="mb-8">
-                  <div className="bg-green-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                  <div className="bg-emerald-600 dark:bg-emerald-700 text-white inline-block px-5 py-2 rounded-xl mb-4 shadow-md">
                     <h3 className="text-xl font-bold">Step 2: Carrier Setup & Registration</h3>
                   </div>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
                     <p className="mb-4">
                       Your delivery carriers (drivers, couriers) need to download and set up the ParcelLockerAdmin mobile app:
                     </p>
                     <ol className="space-y-3 ml-6 list-decimal">
                       <li>
-                        <strong>Download the App:</strong> Carriers download <a href="https://play.google.com/store/apps/details?id=ke.co.squared.parcellockeradmin" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">ParcelLockerAdmin</a> from Google Play Store
+                        <strong>Download the App:</strong> Carriers download <a href="https://play.google.com/store/apps/details?id=ke.co.squared.parcellockeradmin" target="_blank" rel="noopener noreferrer" className="text-emerald-600 dark:text-emerald-400 underline hover:text-emerald-700 dark:hover:text-emerald-300">ParcelLockerAdmin</a> from Google Play Store
                       </li>
                       <li>
                         <strong>Sign Up:</strong> Carriers create an account using their email and phone number
@@ -239,7 +241,7 @@ export default function DevelopersPage() {
                         <strong>Organization Adds Carrier:</strong> You use the ParcelPoint API to assign the carrier (by User ID) to your organization, giving them access to your reservations
                       </li>
                     </ol>
-                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mt-4">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 mt-4">
                       <p className="text-sm">
                         <strong>Note:</strong> Only carriers assigned to your organization can view and use your reserved lockers. This ensures security and prevents unauthorized access.
                       </p>
@@ -249,10 +251,10 @@ export default function DevelopersPage() {
 
                 {/* Step 3: Depositing Parcels */}
                 <div className="mb-8">
-                  <div className="bg-purple-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                  <div className="bg-emerald-600 dark:bg-emerald-700 text-white inline-block px-5 py-2 rounded-xl mb-4 shadow-md">
                     <h3 className="text-xl font-bold">Step 3: Depositing Parcels in Lockers</h3>
                   </div>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
                     <p className="mb-4">
                       When a carrier arrives at a smart locker device to deposit parcels:
                     </p>
@@ -282,7 +284,7 @@ export default function DevelopersPage() {
                         <strong>Parcel Recorded:</strong> The parcel information (parcel ID, device ID, locker ID, timestamp, etc.) is sent back to our web service and stored
                       </li>
                     </ol>
-                    <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 mt-4">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 mt-4">
                       <p className="text-sm">
                         <strong>Behind the scenes:</strong> When a parcel is deposited, the device updates its internal state, marks the locker as occupied, generates an unlocking code, and decreases your reservation's available quantity by 1.
                       </p>
@@ -292,15 +294,15 @@ export default function DevelopersPage() {
 
                 {/* Step 4: Tracking Parcels */}
                 <div className="mb-8">
-                  <div className="bg-orange-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                  <div className="bg-emerald-600 dark:bg-emerald-700 text-white inline-block px-5 py-2 rounded-xl mb-4 shadow-md">
                     <h3 className="text-xl font-bold">Step 4: Tracking Parcel Status</h3>
                   </div>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
                     <p className="mb-4">
                       Once parcels are deposited, your organization has multiple ways to track them:
                     </p>
 
-                    <h4 className="font-semibold mb-3">Real-Time Webhooks (Recommended):</h4>
+                    <h4 className="font-semibold mb-3 text-emerald-700 dark:text-emerald-400">Real-Time Webhooks (Recommended):</h4>
                     <ul className="space-y-2 ml-6 list-disc mb-6">
                       <li>
                         <strong>Parcel Created:</strong> When a carrier deposits a parcel, our system immediately sends a webhook to your configured URL with full parcel details (parcel ID, device ID, locker ID, unlocking code, timestamps, status, etc.)
@@ -316,14 +318,14 @@ export default function DevelopersPage() {
                       </li>
                     </ul>
 
-                    <h4 className="font-semibold mb-3">API Polling (Alternative):</h4>
+                    <h4 className="font-semibold mb-3 text-emerald-700 dark:text-emerald-400">API Polling (Alternative):</h4>
                     <ul className="space-y-2 ml-6 list-disc">
-                      <li>Use the <code>/devices/:id/org/parcels</code> or <code>/organizations/parcels</code> endpoints to fetch parcel lists</li>
+                      <li>Use the <code className="text-sm bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">/devices/:id/org/parcels</code> or <code className="text-sm bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">/organizations/parcels</code> endpoints to fetch parcel lists</li>
                       <li>Filter by device, status, date range, etc.</li>
                       <li>Poll periodically to check for status changes</li>
                     </ul>
 
-                    <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mt-4">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 mt-4">
                       <p className="text-sm mb-2">
                         <strong>Parcel Statuses:</strong>
                       </p>
@@ -339,37 +341,37 @@ export default function DevelopersPage() {
 
                 {/* Complete Workflow Diagram */}
                 <div className="mb-8">
-                  <div className="bg-gray-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                  <div className="bg-emerald-600 dark:bg-emerald-700 text-white inline-block px-5 py-2 rounded-xl mb-4 shadow-md">
                     <h3 className="text-xl font-bold">Complete Workflow Summary</h3>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-6 border-2 border-blue-200 dark:border-blue-800">
+                  <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-xl p-6 border-2 border-emerald-200 dark:border-emerald-700 shadow-lg">
                     <div className="space-y-4">
                       <div className="flex items-start gap-4">
-                        <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">1</div>
+                        <div className="bg-emerald-600 dark:bg-emerald-700 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold shadow-md">1</div>
                         <div>
                           <strong>Organization creates reservations</strong> → API call reserves lockers on device
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">2</div>
+                        <div className="bg-emerald-600 dark:bg-emerald-700 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold shadow-md">2</div>
                         <div>
                           <strong>Carriers download app & sign up</strong> → Share User ID → Organization assigns them
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">3</div>
+                        <div className="bg-emerald-600 dark:bg-emerald-700 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold shadow-md">3</div>
                         <div>
                           <strong>Carrier at device</strong> → Scan device QR → View reservations → Scan parcel → Locker opens → Deposit parcel
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <div className="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">4</div>
+                        <div className="bg-emerald-600 dark:bg-emerald-700 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold shadow-md">4</div>
                         <div>
                           <strong>System notifies organization</strong> → Webhook sent with parcel details → Organization tracks status
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <div className="bg-gray-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">5</div>
+                        <div className="bg-emerald-600 dark:bg-emerald-700 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold shadow-md">5</div>
                         <div>
                           <strong>Recipient collects parcel</strong> → Status updates to "Collected" → Organization receives webhook notification
                         </div>
@@ -379,21 +381,21 @@ export default function DevelopersPage() {
                 </div>
 
                 {/* Next Steps */}
-                <div className="bg-blue-600 text-white rounded-lg p-6">
-                  <h3 className="text-xl font-bold mb-3">Ready to Get Started?</h3>
-                  <p className="mb-4">
+                <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 dark:from-emerald-700 dark:to-emerald-900 text-white rounded-xl p-8 shadow-xl">
+                  <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
+                  <p className="mb-6 text-emerald-50">
                     Contact our team to set up your organization account and receive your API credentials. Then head over to the <strong>Integration</strong> tab to see detailed API documentation.
                   </p>
-                  <div className="flex gap-4">
+                  <div className="flex flex-wrap gap-4">
                     <button
                       onClick={() => setActiveTab('integration')}
-                      className="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                      className="bg-white text-emerald-700 px-8 py-3 rounded-xl font-semibold hover:bg-emerald-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
                       View API Documentation
                     </button>
                     <a
                       href="mailto:developers@parcelpoint.co.ke"
-                      className="bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-800 transition-colors"
+                      className="bg-emerald-800 dark:bg-emerald-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-emerald-900 dark:hover:bg-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                     >
                       Contact Us
                     </a>
@@ -407,7 +409,7 @@ export default function DevelopersPage() {
         {/* Quick Start */}
         <div className="mb-12">
           <h2 className="text-3xl font-bold mb-4">API Reference</h2>
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-6">
             <p className="mb-4">
               The ParcelPoint API provides programmatic access to our smart locker network for partner organizations.
             </p>
@@ -525,7 +527,7 @@ console.log(response.data);`} language="javascript" id="js-example" />
 }`}
           />
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">Device Status</h4>
             <ul className="text-sm space-y-1">
               <li><code>0</code> - Active: Device is online and operational</li>
@@ -540,7 +542,7 @@ console.log(response.data);`} language="javascript" id="js-example" />
             Manage locker reservations for your organization. Reservations allow you to pre-book lockers of specific sizes for a defined period.
           </p>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">Locker Sizes</h4>
             <ul className="text-sm space-y-1">
               <li><code>0</code> - Small</li>
@@ -664,7 +666,7 @@ console.log(response.data);`} language="javascript" id="js-example" />
 }`}
           />
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">Reservation Status</h4>
             <ul className="text-sm space-y-1">
               <li><code>0</code> - Active: Reservation is active and can be used</li>
@@ -750,7 +752,7 @@ console.log(response.data);`} language="javascript" id="js-example" />
 }`}
           />
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">Parcel Status</h4>
             <ul className="text-sm space-y-1">
               <li><code>0</code> - Active: Parcel is in the locker waiting for collection</li>
@@ -768,7 +770,7 @@ console.log(response.data);`} language="javascript" id="js-example" />
             and your organization can send webhooks TO the API to update parcel information.
           </p>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">Setting Up Webhooks</h4>
             <ol className="text-sm space-y-2 list-decimal list-inside">
               <li>Contact your administrator to configure a <code>webhook_url</code> and <code>webhook_secret</code> for your organization</li>
@@ -858,7 +860,7 @@ app.post('/webhooks/parcels', express.json(), (req, res) => {
 });`} language="javascript" id="webhook-verification" />
           </div>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">Optional Response Format</h4>
             <p className="text-sm mb-2">
               Your webhook endpoint can optionally return phone numbers in the response body. If provided, ParcelPoint will
@@ -1059,7 +1061,7 @@ ngrok http 3000
 }`}
           />
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4 my-4">
             <h4 className="font-semibold mb-2">User Roles</h4>
             <ul className="text-sm space-y-1">
               <li><code>admin</code> - Full system access</li>
@@ -1130,17 +1132,17 @@ ngrok http 3000
         </div>
 
         {/* Support */}
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-8 text-center mt-12">
+        <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 border border-emerald-200 dark:border-emerald-700 rounded-xl p-8 text-center mt-12 shadow-lg">
           <h2 className="text-2xl font-bold mb-4">Need Help?</h2>
-          <p className="mb-4">
+          <p className="mb-6 text-gray-700 dark:text-gray-300">
             Our developer support team is here to help you integrate with the ParcelPoint API.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="mailto:developers@parcelpoint.co.ke" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="mailto:developers@parcelpoint.co.ke" className="inline-flex items-center gap-2 px-8 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-semibold">
               <Mail size={20} />
               Email Support
             </a>
-            <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+            <Link href="/" className="inline-flex items-center gap-2 px-8 py-3 border-2 border-emerald-600 text-emerald-600 dark:text-emerald-400 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 font-semibold">
               <ExternalLink size={20} />
               Back to Home
             </Link>
