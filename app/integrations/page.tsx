@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Book, Code, Key, Package, MapPin, Users, ChevronDown, ChevronRight, Copy, Check, Mail, ExternalLink } from 'lucide-react';
 
 export default function DevelopersPage() {
+  const [activeTab, setActiveTab] = useState<'process' | 'integration'>('process');
   const [openSection, setOpenSection] = useState<string>('authentication');
   const [copiedCode, setCopiedCode] = useState<string>('');
 
@@ -14,7 +15,7 @@ export default function DevelopersPage() {
     setTimeout(() => setCopiedCode(''), 2000);
   };
 
-  const baseUrl = 'https://api.parcelpoint.co.ke/api/v1';
+  const baseUrl = 'https://learnqt.alwaysdata.net/api/v1';
 
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? '' : section);
@@ -126,9 +127,9 @@ export default function DevelopersPage() {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
             <Book size={48} />
-            <h1 className="text-4xl md:text-5xl font-bold">API Documentation</h1>
+            <h1 className="text-4xl md:text-5xl font-bold">Integration Documentation</h1>
           </div>
-          <p className="text-xl text-blue-100">Integrate ParcelPoint smart locker services into your application</p>
+          <p className="text-xl text-blue-100">Learn how to integrate ParcelPoint smart locker services</p>
           <div className="mt-6 flex flex-wrap gap-4">
             <div className="bg-white/10 backdrop-blur px-4 py-2 rounded-lg">
               <div className="text-sm text-blue-100">Base URL</div>
@@ -142,11 +143,270 @@ export default function DevelopersPage() {
         </div>
       </div>
 
-      {/* Content */}
+      {/* Content with Sidebar */}
       <div className="container mx-auto px-4 py-12">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar Navigation */}
+          <aside className="lg:w-64 shrink-0">
+            <nav className="sticky top-4 space-y-2">
+              <button
+                onClick={() => setActiveTab('process')}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                  activeTab === 'process'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Package size={20} />
+                  <span className="font-semibold">Process</span>
+                </div>
+                <p className="text-xs mt-1 opacity-80">How it works</p>
+              </button>
+              <button
+                onClick={() => setActiveTab('integration')}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                  activeTab === 'integration'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Code size={20} />
+                  <span className="font-semibold">Integration</span>
+                </div>
+                <p className="text-xs mt-1 opacity-80">API Reference</p>
+              </button>
+            </nav>
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1 min-w-0">
+            {activeTab === 'process' && (
+              <div>
+                <h2 className="text-3xl font-bold mb-6">How ParcelPoint Integration Works</h2>
+                <p className="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                  This guide explains the complete workflow for partner organizations using ParcelPoint smart locker services.
+                </p>
+
+                {/* Step 1: Create Reservations */}
+                <div className="mb-8">
+                  <div className="bg-blue-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                    <h3 className="text-xl font-bold">Step 1: Create Locker Reservations</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <p className="mb-4">
+                      Your organization uses the ParcelPoint API to reserve lockers at specific devices. When you create a reservation via API:
+                    </p>
+                    <ul className="space-y-2 ml-6 list-disc">
+                      <li>Specify the <strong>device ID</strong>, <strong>locker size</strong> (small, medium, or large), <strong>quantity</strong>, and <strong>expiration date</strong></li>
+                      <li>Our web service receives your reservation request and validates it</li>
+                      <li>The device is notified of the reservation in real-time</li>
+                      <li>The specified quantity of lockers for that size becomes <strong>reserved</strong> and unavailable to the public</li>
+                      <li>Your organization can now use these reserved lockers exclusively</li>
+                    </ul>
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mt-4">
+                      <p className="text-sm">
+                        <strong>Example:</strong> If you reserve 10 small lockers at Device DEV001 until end of month, those 10 small compartments are marked as reserved on the device and can only be used by your carriers.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 2: Carrier Setup */}
+                <div className="mb-8">
+                  <div className="bg-green-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                    <h3 className="text-xl font-bold">Step 2: Carrier Setup & Registration</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <p className="mb-4">
+                      Your delivery carriers (drivers, couriers) need to download and set up the ParcelLockerAdmin mobile app:
+                    </p>
+                    <ol className="space-y-3 ml-6 list-decimal">
+                      <li>
+                        <strong>Download the App:</strong> Carriers download <a href="https://play.google.com/store/apps/details?id=ke.co.squared.parcellockeradmin" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">ParcelLockerAdmin</a> from Google Play Store
+                      </li>
+                      <li>
+                        <strong>Sign Up:</strong> Carriers create an account using their email and phone number
+                      </li>
+                      <li>
+                        <strong>Get User ID:</strong> After signup, carriers navigate to the <strong>Profile section</strong> in the app to find their unique <strong>User ID</strong>
+                      </li>
+                      <li>
+                        <strong>Share User ID:</strong> Carriers share this User ID with your organization
+                      </li>
+                      <li>
+                        <strong>Organization Adds Carrier:</strong> You use the ParcelPoint API to assign the carrier (by User ID) to your organization, giving them access to your reservations
+                      </li>
+                    </ol>
+                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mt-4">
+                      <p className="text-sm">
+                        <strong>Note:</strong> Only carriers assigned to your organization can view and use your reserved lockers. This ensures security and prevents unauthorized access.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 3: Depositing Parcels */}
+                <div className="mb-8">
+                  <div className="bg-purple-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                    <h3 className="text-xl font-bold">Step 3: Depositing Parcels in Lockers</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <p className="mb-4">
+                      When a carrier arrives at a smart locker device to deposit parcels:
+                    </p>
+                    <ol className="space-y-3 ml-6 list-decimal">
+                      <li>
+                        <strong>Get Device ID:</strong> The carrier <strong>swipes down on the device's home screen</strong> to reveal a QR code containing the device ID
+                      </li>
+                      <li>
+                        <strong>Open App Reservations:</strong> In the ParcelLockerAdmin app, the carrier navigates to the <strong>Reservations tab</strong>
+                      </li>
+                      <li>
+                        <strong>Scan Device QR Code:</strong> The carrier taps to scan and points their phone at the device's QR code
+                      </li>
+                      <li>
+                        <strong>View Reservations:</strong> The app fetches and displays all active reservations for that device belonging to your organization, showing available quantities by size (e.g., "5 Small lockers available", "3 Medium lockers available")
+                      </li>
+                      <li>
+                        <strong>Select Size & Scan Parcel:</strong> The carrier selects the appropriate size (e.g., Small) and then scans the parcel's barcode
+                      </li>
+                      <li>
+                        <strong>Locker Opens:</strong> The app sends a request to the device, which automatically opens an available reserved locker of that size
+                      </li>
+                      <li>
+                        <strong>Deposit Parcel:</strong> The carrier places the parcel inside the open locker and closes the door
+                      </li>
+                      <li>
+                        <strong>Parcel Recorded:</strong> The parcel information (parcel ID, device ID, locker ID, timestamp, etc.) is sent back to our web service and stored
+                      </li>
+                    </ol>
+                    <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 mt-4">
+                      <p className="text-sm">
+                        <strong>Behind the scenes:</strong> When a parcel is deposited, the device updates its internal state, marks the locker as occupied, generates an unlocking code, and decreases your reservation's available quantity by 1.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 4: Tracking Parcels */}
+                <div className="mb-8">
+                  <div className="bg-orange-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                    <h3 className="text-xl font-bold">Step 4: Tracking Parcel Status</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <p className="mb-4">
+                      Once parcels are deposited, your organization has multiple ways to track them:
+                    </p>
+
+                    <h4 className="font-semibold mb-3">Real-Time Webhooks (Recommended):</h4>
+                    <ul className="space-y-2 ml-6 list-disc mb-6">
+                      <li>
+                        <strong>Parcel Created:</strong> When a carrier deposits a parcel, our system immediately sends a webhook to your configured URL with full parcel details (parcel ID, device ID, locker ID, unlocking code, timestamps, status, etc.)
+                      </li>
+                      <li>
+                        <strong>Parcel Collected:</strong> When the recipient collects the parcel (status changes to "Collected"), you receive another webhook notification
+                      </li>
+                      <li>
+                        <strong>Parcel Discarded:</strong> If a parcel is removed without collection (status "Discarded"), you're notified
+                      </li>
+                      <li>
+                        <strong>Parcel Updated:</strong> Any updates to parcel information trigger a webhook
+                      </li>
+                    </ul>
+
+                    <h4 className="font-semibold mb-3">API Polling (Alternative):</h4>
+                    <ul className="space-y-2 ml-6 list-disc">
+                      <li>Use the <code>/devices/:id/org/parcels</code> or <code>/organizations/parcels</code> endpoints to fetch parcel lists</li>
+                      <li>Filter by device, status, date range, etc.</li>
+                      <li>Poll periodically to check for status changes</li>
+                    </ul>
+
+                    <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mt-4">
+                      <p className="text-sm mb-2">
+                        <strong>Parcel Statuses:</strong>
+                      </p>
+                      <ul className="text-sm space-y-1 ml-4">
+                        <li><code>0 - Stored:</code> Parcel is in the locker awaiting collection</li>
+                        <li><code>1 - Collected:</code> Parcel has been collected by recipient</li>
+                        <li><code>2 - Discarded:</code> Parcel was removed without collection (expired/damaged)</li>
+                        <li><code>3 - Reserved:</code> Locker reserved but parcel not yet deposited</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Complete Workflow Diagram */}
+                <div className="mb-8">
+                  <div className="bg-gray-600 text-white inline-block px-4 py-2 rounded-lg mb-4">
+                    <h3 className="text-xl font-bold">Complete Workflow Summary</h3>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-6 border-2 border-blue-200 dark:border-blue-800">
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-4">
+                        <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">1</div>
+                        <div>
+                          <strong>Organization creates reservations</strong> → API call reserves lockers on device
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">2</div>
+                        <div>
+                          <strong>Carriers download app & sign up</strong> → Share User ID → Organization assigns them
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">3</div>
+                        <div>
+                          <strong>Carrier at device</strong> → Scan device QR → View reservations → Scan parcel → Locker opens → Deposit parcel
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-orange-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">4</div>
+                        <div>
+                          <strong>System notifies organization</strong> → Webhook sent with parcel details → Organization tracks status
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-gray-600 text-white rounded-full w-8 h-8 flex items-center justify-center shrink-0 font-bold">5</div>
+                        <div>
+                          <strong>Recipient collects parcel</strong> → Status updates to "Collected" → Organization receives webhook notification
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Next Steps */}
+                <div className="bg-blue-600 text-white rounded-lg p-6">
+                  <h3 className="text-xl font-bold mb-3">Ready to Get Started?</h3>
+                  <p className="mb-4">
+                    Contact our team to set up your organization account and receive your API credentials. Then head over to the <strong>Integration</strong> tab to see detailed API documentation.
+                  </p>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => setActiveTab('integration')}
+                      className="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                    >
+                      View API Documentation
+                    </button>
+                    <a
+                      href="mailto:developers@parcelpoint.co.ke"
+                      className="bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-800 transition-colors"
+                    >
+                      Contact Us
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'integration' && (
+              <div>
         {/* Quick Start */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold mb-4">Getting Started</h2>
+          <h2 className="text-3xl font-bold mb-4">API Reference</h2>
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
             <p className="mb-4">
               The ParcelPoint API provides programmatic access to our smart locker network for partner organizations.
@@ -864,9 +1124,13 @@ ngrok http 3000
             </div>
           </div>
         </div>
+              </div>
+            )}
+          </main>
+        </div>
 
         {/* Support */}
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-8 text-center">
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-8 text-center mt-12">
           <h2 className="text-2xl font-bold mb-4">Need Help?</h2>
           <p className="mb-4">
             Our developer support team is here to help you integrate with the ParcelPoint API.
