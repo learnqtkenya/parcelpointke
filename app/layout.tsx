@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@/components/analytics";
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { FAQStructuredData, ReviewStructuredData, ServiceStructuredData, WebSiteStructuredData } from '@/components/StructuredData';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,12 +81,6 @@ export const metadata: Metadata = {
     creator: "@ParcelPointKE",
     site: "@ParcelPointKE"
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
-
   category: "technology",
   classification: "Business",
   referrer: "origin-when-cross-origin",
@@ -273,6 +268,11 @@ export default function RootLayout({
             })
           }}
         />
+
+        <FAQStructuredData />
+        <ReviewStructuredData />
+        <ServiceStructuredData />
+        <WebSiteStructuredData />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
