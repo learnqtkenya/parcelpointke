@@ -2,27 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global smooth transitions for theme changes */
+/* Professional Black/White Color System */
 @layer base {
   :root {
     color-scheme: light;
+
+    /* Font variables */
     --font-geist-sans: var(--font-geist-sans);
     --font-geist-mono: var(--font-geist-mono);
+
+    /* Core colors - Light Mode (Black on White) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+
+    /* Primary - Near black in light mode */
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary - Light gray */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+
+    /* Muted */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent */
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
+
+    /* Card */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    /* Border & Input */
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 9%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Success - for positive states */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+
+    /* Radius */
+    --radius: 0.625rem;
   }
 
-  :root.dark {
+  .dark {
     color-scheme: dark;
+
+    /* Core colors - Dark Mode (White on Black) */
+    --background: 0 0% 9%;
+    --foreground: 0 0% 98%;
+
+    /* Primary - Near white in dark mode */
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    /* Secondary - Dark gray */
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    /* Muted */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 64%;
+
+    /* Accent */
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+
+    /* Card */
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 98%;
+
+    /* Border & Input */
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 85%;
+
+    /* Destructive */
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Success */
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 98%;
   }
 
   * {
-    @apply transition-colors duration-200;
+    @apply border-border transition-colors duration-200;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
 
   html {
     font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
+}
 
-  body {
-    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+/* Utility classes for the color system */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

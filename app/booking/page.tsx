@@ -5,14 +5,15 @@ import {
   MapPin,
   Package,
   CheckCircle,
-  ArrowLeft,
   Calculator,
   Smartphone,
   AlertCircle,
-  Clock as ClockIcon
+  Clock as ClockIcon,
+  ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { Navigation, Footer } from '@/components/landing';
 import { getDevicesOverview, checkExistingBooking, initiateBookingPayment, getBookingDetails, initiateExtensionPayment, decodeExtensionUrl } from '@/lib/api/services';
 import type { DeviceOverview } from '@/lib/api/types';
 
@@ -264,12 +265,12 @@ function BookingPageContent() {
           {[2, 3].map((step, index) => (
             <div key={step} className="flex items-center">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                step <= currentStep ? 'bg-emerald-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                step <= currentStep ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'
               }`}>
                 {step < currentStep ? <CheckCircle className="h-6 w-6" /> : index + 1}
               </div>
               {index < 1 && (
-                <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
+                <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-primary' : 'bg-secondary'}`} />
               )}
             </div>
           ))}
@@ -282,12 +283,12 @@ function BookingPageContent() {
         {[1, 2, 3].map((step) => (
           <div key={step} className="flex items-center">
             <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-              step <= currentStep ? 'bg-emerald-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+              step <= currentStep ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'
             }`}>
               {step < currentStep ? <CheckCircle className="h-6 w-6" /> : step}
             </div>
             {step < 3 && (
-              <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'}`} />
+              <div className={`w-16 h-1 mx-2 ${step < currentStep ? 'bg-primary' : 'bg-secondary'}`} />
             )}
           </div>
         ))}
@@ -299,10 +300,10 @@ function BookingPageContent() {
     if (isExtensionMode) {
       return (
         <div className="grid grid-cols-2 gap-4 mb-12 text-center text-sm">
-          <div className={currentStep >= 2 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+          <div className={currentStep >= 2 ? 'text-foreground font-medium' : 'text-muted-foreground'}>
             Duration & Payment
           </div>
-          <div className={currentStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+          <div className={currentStep >= 3 ? 'text-foreground font-medium' : 'text-muted-foreground'}>
             Confirmation
           </div>
         </div>
@@ -311,13 +312,13 @@ function BookingPageContent() {
 
     return (
       <div className="grid grid-cols-3 gap-4 mb-12 text-center text-sm">
-        <div className={currentStep >= 1 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+        <div className={currentStep >= 1 ? 'text-foreground font-medium' : 'text-muted-foreground'}>
           Location & Size
         </div>
-        <div className={currentStep >= 2 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+        <div className={currentStep >= 2 ? 'text-foreground font-medium' : 'text-muted-foreground'}>
           Duration & Payment
         </div>
-        <div className={currentStep >= 3 ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-gray-500'}>
+        <div className={currentStep >= 3 ? 'text-foreground font-medium' : 'text-muted-foreground'}>
           Confirmation
         </div>
       </div>
@@ -326,20 +327,13 @@ function BookingPageContent() {
 
   if (currentStep === 1) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="bg-background pt-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
           <div className="text-center mb-8">
-            <Link
-              href="/"
-              className="inline-flex items-center text-emerald-600 dark:text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors mb-6"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Link>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-4xl font-bold text-foreground mb-2">
               Book a Locker
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-xl text-muted-foreground">
               Secure your package storage in just a few simple steps
             </p>
           </div>
@@ -347,36 +341,36 @@ function BookingPageContent() {
           <StepLabels />
 
           {error && (
-            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+            <div className="mb-6 bg-destructive/10 border border-destructive/20 rounded-xl p-4">
               <div className="flex items-center gap-3">
-                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0" />
                 <div>
-                  <p className="text-red-800 dark:text-red-200 font-medium">Error</p>
-                  <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+                  <p className="text-destructive font-medium">Error</p>
+                  <p className="text-destructive/80 text-sm">{error}</p>
                 </div>
               </div>
               <button
                 onClick={loadDevicesOverview}
-                className="mt-3 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium"
+                className="mt-3 text-sm text-destructive hover:text-destructive/80 font-medium"
               >
                 Try Again
               </button>
             </div>
           )}
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+          <div className="bg-card rounded-2xl shadow-lg p-8 border border-border">
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Select Location & Locker Size</h2>
+              <h2 className="text-2xl font-bold text-card-foreground mb-6">Select Location & Locker Size</h2>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-semibold text-card-foreground mb-3">
                   Choose ParcelPoint Location
                 </label>
                 {isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                   </div>
                 ) : locations.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <div className="text-center py-8 text-muted-foreground">
                     No locations available at the moment. Please try again later.
                   </div>
                 ) : (
@@ -387,32 +381,32 @@ function BookingPageContent() {
                       onClick={() => setLocationId(location.id)}
                       className={`p-4 rounded-xl border-2 text-left transition-all ${
                         locationId === location.id
-                          ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-900/20'
-                          : 'border-gray-200 dark:border-gray-700 hover:border-emerald-300'
+                          ? 'border-primary bg-secondary'
+                          : 'border-border hover:border-primary/50'
                       }`}
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="font-bold text-gray-900 dark:text-white">{location.name}</h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center mt-1">
+                          <h3 className="font-bold text-card-foreground">{location.name}</h3>
+                          <p className="text-sm text-muted-foreground flex items-center mt-1">
                             <MapPin className="h-4 w-4 mr-1" />
                             {location.address}
                           </p>
                         </div>
-                        {locationId === location.id && <CheckCircle className="h-6 w-6 text-emerald-600" />}
+                        {locationId === location.id && <CheckCircle className="h-6 w-6 text-primary" />}
                       </div>
                       <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
                         <div className="text-center">
                           <div className="font-medium">Small</div>
-                          <div className="text-green-600">{location.available.small} available</div>
+                          <div className="text-success">{location.available.small} available</div>
                         </div>
                         <div className="text-center">
                           <div className="font-medium">Medium</div>
-                          <div className="text-green-600">{location.available.medium} available</div>
+                          <div className="text-success">{location.available.medium} available</div>
                         </div>
                         <div className="text-center">
                           <div className="font-medium">Large</div>
-                          <div className="text-green-600">{location.available.large} available</div>
+                          <div className="text-success">{location.available.large} available</div>
                         </div>
                       </div>
                       </button>
@@ -422,7 +416,7 @@ function BookingPageContent() {
               </div>
               {locationId && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-semibold text-card-foreground mb-3">
                     Choose Locker Size
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -432,21 +426,21 @@ function BookingPageContent() {
                         onClick={() => setLockerSize(locker.size)}
                         className={`p-4 rounded-xl border-2 text-left transition-all ${
                           lockerSize === locker.size
-                            ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-900/20'
-                            : 'border-gray-200 dark:border-gray-700 hover:border-emerald-300'
+                            ? 'border-primary bg-secondary'
+                            : 'border-border hover:border-primary/50'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-2">
-                          <Package className="h-6 w-6 text-emerald-600" />
-                          {lockerSize === locker.size && <CheckCircle className="h-5 w-5 text-emerald-600" />}
+                          <Package className="h-6 w-6 text-primary" />
+                          {lockerSize === locker.size && <CheckCircle className="h-5 w-5 text-primary" />}
                         </div>
-                        <h3 className="font-bold text-gray-900 dark:text-white capitalize mb-1">
+                        <h3 className="font-bold text-card-foreground capitalize mb-1">
                           {locker.size} Locker
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{locker.dimensions}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{locker.description}</p>
+                        <p className="text-sm text-muted-foreground mb-2">{locker.dimensions}</p>
+                        <p className="text-xs text-muted-foreground mb-3">{locker.description}</p>
                         <div className="text-center">
-                          <span className="text-lg font-bold text-emerald-600">Same Price for All Sizes</span>
+                          <span className="text-lg font-bold text-foreground">Same Price for All Sizes</span>
                         </div>
                       </button>
                     ))}
@@ -454,10 +448,10 @@ function BookingPageContent() {
                 </div>
               )}
             </div>
-            <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex justify-between mt-8 pt-6 border-t border-border">
               <button
                 disabled={true}
-                className="bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed px-6 py-3 rounded-lg font-medium"
+                className="bg-muted text-muted-foreground cursor-not-allowed px-6 py-3 rounded-lg font-medium"
               >
                 Previous
               </button>
@@ -466,8 +460,8 @@ function BookingPageContent() {
                 disabled={!isStepValid()}
                 className={`px-8 py-3 rounded-lg font-medium transition-colors ${
                   isStepValid()
-                    ? 'bg-emerald-600 dark:bg-emerald-500 text-white hover:bg-emerald-700 dark:hover:bg-emerald-600'
-                    : 'bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed'
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    : 'bg-muted text-muted-foreground cursor-not-allowed'
                 }`}
               >
                 Next Step
@@ -481,20 +475,13 @@ function BookingPageContent() {
 
   if (currentStep === 2) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="bg-background pt-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
           <div className="text-center mb-8">
-            <Link
-              href="/"
-              className="inline-flex items-center text-emerald-600 dark:text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors mb-6"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Link>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-4xl font-bold text-foreground mb-2">
               {isExtensionMode ? 'Extend Your Booking' : 'Book a Locker'}
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-xl text-muted-foreground">
               {isExtensionMode
                 ? 'Add more time to your current booking'
                 : 'Secure your package storage in just a few simple steps'}
@@ -504,18 +491,18 @@ function BookingPageContent() {
           <StepLabels />
 
           {error && (
-            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+            <div className="mb-6 bg-destructive/10 border border-destructive/20 rounded-xl p-4">
               <div className="flex items-center gap-3">
-                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0" />
                 <div>
-                  <p className="text-red-800 dark:text-red-200 font-medium">Error</p>
-                  <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+                  <p className="text-destructive font-medium">Error</p>
+                  <p className="text-destructive/80 text-sm">{error}</p>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+          <div className="bg-card rounded-2xl shadow-lg p-8 border border-border">
             <div className="space-y-6">
               {isExtensionMode && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-6">
@@ -530,11 +517,11 @@ function BookingPageContent() {
                   </div>
                 </div>
               )}
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-2xl font-bold text-card-foreground mb-6">
                 {isExtensionMode ? 'Extension Duration & Payment' : 'Duration & Payment'}
               </h2>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-semibold text-card-foreground mb-3">
                   {isExtensionMode ? 'Extension Duration (Hours)' : 'Booking Duration (Hours)'}
                 </label>
                 <div className="flex items-center space-x-4 mb-4">
@@ -544,9 +531,9 @@ function BookingPageContent() {
                     max="168"
                     value={hours}
                     onChange={(e) => setHours(parseInt(e.target.value))}
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    className="flex-1 h-2 bg-secondary rounded-lg appearance-none cursor-pointer"
                   />
-                  <div className="text-2xl font-bold text-emerald-600 min-w-[80px]">
+                  <div className="text-2xl font-bold text-foreground min-w-[80px]">
                     {hours}h
                   </div>
                 </div>
@@ -557,33 +544,33 @@ function BookingPageContent() {
                       onClick={() => setHours(hourOption)}
                       className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
                         hours === hourOption
-                          ? 'bg-emerald-600 text-white'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-secondary text-secondary-foreground hover:bg-accent'
                       }`}
                     >
                       {hourOption}h
                     </button>
                   ))}
                 </div>
-                <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-xl">
+                <div className="bg-secondary p-4 rounded-xl">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <Calculator className="h-5 w-5 text-emerald-600 mr-2" />
-                      <span className="font-medium text-gray-900 dark:text-white">Total Cost</span>
+                      <Calculator className="h-5 w-5 text-foreground mr-2" />
+                      <span className="font-medium text-card-foreground">Total Cost</span>
                     </div>
-                    <span className="text-2xl font-bold text-emerald-600">
+                    <span className="text-2xl font-bold text-foreground">
                       KES {calculateTotalCost()}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                  <p className="text-sm text-muted-foreground mt-2">
                     First hour: KES 50 + {Math.max(0, hours - 1)} additional hours × KES 10/hour
                   </p>
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-3">M-PESA Payment</h3>
+                <h3 className="font-semibold text-card-foreground mb-3">M-PESA Payment</h3>
                 <div className="max-w-md">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="phone" className="block text-sm font-medium text-muted-foreground mb-1">
                     Phone Number (for STK Push)
                   </label>
                   <input
@@ -592,20 +579,20 @@ function BookingPageContent() {
                     type="tel"
                     value={phoneNumber}
                     onChange={(e) => handlePhoneChange(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none ${
+                    className={`w-full px-3 py-2 border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none ${
                       phoneError
-                        ? 'border-red-500 dark:border-red-500'
-                        : 'border-gray-300 dark:border-gray-600'
+                        ? 'border-destructive'
+                        : 'border-input'
                     }`}
                     placeholder="0712 345 678 or 254712 345 678"
                     autoComplete="tel"
                   />
                   {phoneError ? (
-                    <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                    <p className="text-sm text-destructive mt-1">
                       {phoneError}
                     </p>
                   ) : (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    <p className="text-sm text-muted-foreground mt-1">
                       {isExtensionMode
                         ? "You'll receive STK push to extend your booking"
                         : "You'll receive STK push and booking code via SMS"}
@@ -614,20 +601,20 @@ function BookingPageContent() {
                 </div>
               </div>
               <div className="mt-4">
-                <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
+                <div className="bg-success/10 p-6 rounded-xl border border-success/20">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h4 className="font-semibold text-green-900 dark:text-green-100">Ready to Pay</h4>
-                      <p className="text-sm text-green-800 dark:text-green-200">
+                      <h4 className="font-semibold text-success">Ready to Pay</h4>
+                      <p className="text-sm text-success/80">
                         STK push will be sent to {phoneNumber ? formatPhoneNumber(phoneNumber) : 'your phone number'}
                       </p>
                     </div>
-                    <Smartphone className="h-8 w-8 text-green-600" />
+                    <Smartphone className="h-8 w-8 text-success" />
                   </div>
                   <button
                     onClick={handleBookingSubmit}
                     disabled={isSubmitting || !phoneNumber}
-                    className="w-full bg-green-600 dark:bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors font-medium disabled:opacity-50"
+                    className="w-full bg-success text-success-foreground py-3 px-4 rounded-lg hover:bg-success/90 transition-colors font-medium disabled:opacity-50"
                   >
                     {isSubmitting ? 'Processing...' : `Send STK Push - Pay KES ${calculateTotalCost()}`}
                   </button>
@@ -635,10 +622,10 @@ function BookingPageContent() {
               </div>
             </div>
             {!isExtensionMode && (
-              <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex justify-between mt-8 pt-6 border-t border-border">
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition-colors"
+                  className="bg-secondary text-secondary-foreground hover:bg-accent px-6 py-3 rounded-lg font-medium transition-colors"
                 >
                   Previous
                 </button>
@@ -652,20 +639,13 @@ function BookingPageContent() {
 
   // Step 3 - Confirmation
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="bg-background pt-16 pb-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div className="text-center mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center text-emerald-600 dark:text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors mb-6"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Home
-          </Link>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
             {isExtensionMode ? 'Extend Your Booking' : 'Book a Locker'}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <p className="text-xl text-muted-foreground">
             {isExtensionMode
               ? 'Add more time to your current booking'
               : 'Secure your package storage in just a few simple steps'}
@@ -673,25 +653,25 @@ function BookingPageContent() {
         </div>
         <StepIndicator />
         <StepLabels />
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+        <div className="bg-card rounded-2xl shadow-lg p-8 border border-border">
           <div className="text-center space-y-6">
-            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle className="h-12 w-12 text-green-600" />
+            <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="h-12 w-12 text-success" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              <h2 className="text-3xl font-bold text-card-foreground mb-2">
                 STK Push Sent!
               </h2>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-muted-foreground">
                 {isExtensionMode
                   ? 'Complete payment on your phone to extend your booking'
                   : 'Complete payment on your phone to receive your booking code'}
               </p>
             </div>
             <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl text-left">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Next Steps</h3>
+              <h3 className="font-semibold text-card-foreground mb-3">Next Steps</h3>
               {isExtensionMode ? (
-                <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                <ol className="text-sm text-muted-foreground space-y-2">
                   <li className="flex items-start">
                     <span className="font-semibold text-blue-600 mr-2">1.</span>
                     <span>Check your phone for M-PESA STK push notification</span>
@@ -710,7 +690,7 @@ function BookingPageContent() {
                   </li>
                 </ol>
               ) : (
-                <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                <ol className="text-sm text-muted-foreground space-y-2">
                   <li className="flex items-start">
                     <span className="font-semibold text-blue-600 mr-2">1.</span>
                     <span>Check your phone for M-PESA STK push notification</span>
@@ -733,7 +713,7 @@ function BookingPageContent() {
             <div className="text-center">
               <Link
                 href="/"
-                className="text-emerald-600 dark:text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-400 font-medium inline-flex items-center gap-2"
+                className="text-muted-foreground hover:text-foreground font-medium inline-flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back to Home
@@ -748,12 +728,16 @@ function BookingPageContent() {
 
 export default function BookingPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-      </div>
-    }>
-      <BookingPageContent />
-    </Suspense>
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <Suspense fallback={
+        <div className="min-h-screen bg-background flex items-center justify-center pt-16">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      }>
+        <BookingPageContent />
+      </Suspense>
+      <Footer />
+    </div>
   );
 }

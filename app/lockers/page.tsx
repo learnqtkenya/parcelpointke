@@ -6,7 +6,7 @@ import {
   Clock,
   Package,
   CheckCircle,
-  Navigation,
+  Navigation as NavigationIcon,
   Phone,
   Search,
   Filter,
@@ -15,6 +15,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
+import { Navigation, Footer } from '@/components/landing';
 
 interface Location {
   name: string;
@@ -71,13 +72,13 @@ const LockersPage = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Active':
-        return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border-green-200 dark:border-green-800';
+        return 'bg-success/10 text-success border-success/20';
       case 'Coming Soon':
         return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800';
       case 'Planning':
         return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-800';
       default:
-        return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 border-gray-200 dark:border-gray-600';
+        return 'bg-muted text-muted-foreground border-border';
     }
   };
 
@@ -101,14 +102,14 @@ const LockersPage = () => {
   };
 
   const LocationCard = ({ location, isListView = false }: { location: Location; isListView?: boolean }) => (
-    <div className={`bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 overflow-hidden ${isListView ? 'flex' : ''}`}>
+    <div className={`bg-card rounded-2xl border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 overflow-hidden ${isListView ? 'flex' : ''}`}>
       {/* Header with status */}
       <div className={`p-6 ${isListView ? 'flex-1' : ''}`}>
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{location.name}</h3>
-            <div className="flex items-center text-gray-600 dark:text-gray-300 mb-2">
-              <MapPin className="h-4 w-4 mr-2 text-emerald-600 dark:text-emerald-500" />
+            <h3 className="text-xl font-bold text-card-foreground mb-2">{location.name}</h3>
+            <div className="flex items-center text-muted-foreground mb-2">
+              <MapPin className="h-4 w-4 mr-2 text-foreground" />
               <span className="text-sm">{location.address}</span>
             </div>
           </div>
@@ -119,39 +120,39 @@ const LockersPage = () => {
 
         {/* Description */}
         {location.description && (
-          <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+          <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
             {location.description}
           </p>
         )}
 
         {/* Details Grid */}
         <div className={`grid ${isListView ? 'grid-cols-2' : 'grid-cols-1'} gap-3 mb-4`}>
-          <div className="flex items-center justify-between py-2 px-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+          <div className="flex items-center justify-between py-2 px-3 bg-secondary rounded-lg">
             <div className="flex items-center">
-              <Clock className="h-4 w-4 text-emerald-600 dark:text-emerald-500 mr-2" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Hours</span>
+              <Clock className="h-4 w-4 text-foreground mr-2" />
+              <span className="text-sm font-medium text-muted-foreground">Hours</span>
             </div>
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">{location.hours}</span>
+            <span className="text-sm font-semibold text-card-foreground">{location.hours}</span>
           </div>
 
-          <div className="flex items-center justify-between py-2 px-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+          <div className="flex items-center justify-between py-2 px-3 bg-secondary rounded-lg">
             <div className="flex items-center">
-              <Package className="h-4 w-4 text-emerald-600 dark:text-emerald-500 mr-2" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Lockers</span>
+              <Package className="h-4 w-4 text-foreground mr-2" />
+              <span className="text-sm font-medium text-muted-foreground">Lockers</span>
             </div>
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">{location.lockers}</span>
+            <span className="text-sm font-semibold text-card-foreground">{location.lockers}</span>
           </div>
         </div>
 
         {/* Features */}
         {location.features && (
           <div className="mb-4">
-            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Features</h4>
+            <h4 className="text-sm font-semibold text-muted-foreground mb-2">Features</h4>
             <div className="flex flex-wrap gap-2">
               {location.features.map((feature, index) => (
                 <span
                   key={index}
-                  className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400"
+                  className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-secondary text-secondary-foreground"
                 >
                   <CheckCircle className="h-3 w-3 mr-1" />
                   {feature}
@@ -166,16 +167,16 @@ const LockersPage = () => {
           {location.status === 'Active' && (
             <button
               onClick={() => openDirections(location)}
-              className="flex-1 bg-emerald-600 dark:bg-emerald-500 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium flex items-center justify-center gap-2"
+              className="flex-1 bg-primary text-primary-foreground py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center justify-center gap-2"
             >
-              <Navigation className="h-4 w-4" />
+              <NavigationIcon className="h-4 w-4" />
               Get Directions
             </button>
           )}
 
           <button
             onClick={() => window.open('https://wa.me/254759777587?text=I need help with the ParcelPoint locker at ' + encodeURIComponent(location.name), '_blank')}
-            className="flex-1 border border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 py-2 px-4 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors font-medium flex items-center justify-center gap-2"
+            className="flex-1 border border-primary text-foreground py-2 px-4 rounded-lg hover:bg-secondary transition-colors font-medium flex items-center justify-center gap-2"
           >
             <Phone className="h-4 w-4" />
             Contact Support
@@ -186,49 +187,43 @@ const LockersPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-background">
+      <Navigation />
+
       {/* Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-card border-b border-border pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <Link
-                href="/"
-                className="inline-flex items-center text-emerald-600 dark:text-emerald-500 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors mb-4"
-              >
-                ← Back to Home
-              </Link>
-              <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2">
-                ParcelPoint Lockers
-              </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl">
-                Find secure, convenient parcel pickup locations across Nairobi. Available 24/7 with M-PESA payment integration.
-              </p>
-            </div>
+          <div className="mb-6">
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-2">
+              ParcelPoint Lockers
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl">
+              Find secure, convenient parcel pickup locations across Nairobi. Available 24/7 with M-PESA payment integration.
+            </p>
           </div>
 
           {/* Search and Filters */}
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
               <input
                 type="text"
                 placeholder="Search locations..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent outline-none transition-colors"
+                className="w-full pl-10 pr-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-colors"
               />
             </div>
 
             <div className="flex items-center gap-4">
               {/* Status Filter */}
               <div className="flex items-center gap-2">
-                <Filter className="h-5 w-5 text-gray-400" />
+                <Filter className="h-5 w-5 text-muted-foreground" />
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent outline-none transition-colors"
+                  className="px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-colors"
                 >
                   <option value="All">All Status</option>
                   <option value="Active">Active</option>
@@ -238,13 +233,13 @@ const LockersPage = () => {
               </div>
 
               {/* View Toggle */}
-              <div className="flex items-center bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
+              <div className="flex items-center bg-secondary rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-md transition-colors ${
                     viewMode === 'grid'
-                      ? 'bg-white dark:bg-gray-600 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                      ? 'bg-background text-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <Grid className="h-4 w-4" />
@@ -253,8 +248,8 @@ const LockersPage = () => {
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-md transition-colors ${
                     viewMode === 'list'
-                      ? 'bg-white dark:bg-gray-600 text-emerald-600 dark:text-emerald-400 shadow-sm'
-                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                      ? 'bg-background text-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <List className="h-4 w-4" />
@@ -267,7 +262,7 @@ const LockersPage = () => {
 
       {/* Results Count */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <p className="text-gray-600 dark:text-gray-300 mb-6">
+        <p className="text-muted-foreground mb-6">
           Showing {filteredLocations.length} of {locations.length} locations
         </p>
 
@@ -288,11 +283,11 @@ const LockersPage = () => {
         {/* No Results */}
         {filteredLocations.length === 0 && (
           <div className="text-center py-12">
-            <MapPin className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <MapPin className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-foreground mb-2">
               No locations found
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-muted-foreground mb-6">
               Try adjusting your search terms or filters
             </p>
             <button
@@ -300,7 +295,7 @@ const LockersPage = () => {
                 setSearchTerm('');
                 setStatusFilter('All');
               }}
-              className="bg-emerald-600 dark:bg-emerald-500 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium"
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
             >
               Clear Filters
             </button>
@@ -308,30 +303,32 @@ const LockersPage = () => {
         )}
 
         {/* Call to Action */}
-        <div className="mt-16 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="mt-16 bg-secondary rounded-2xl p-8 text-center">
+          <h3 className="text-2xl font-bold text-foreground mb-4">
             Want ParcelPoint at Your Location?
           </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
             We're always looking for strategic locations to expand our network. Partner with us to bring convenient parcel services to your community.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => window.open('https://wa.me/254759777587?text=I have a location that would be perfect for ParcelPoint lockers. I\'d like to discuss partnership opportunities.', '_blank')}
-              className="bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-3 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium inline-flex items-center justify-center gap-2"
+              className="bg-primary text-primary-foreground px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium inline-flex items-center justify-center gap-2"
             >
               Suggest a Location
               <ExternalLink className="h-4 w-4" />
             </button>
             <Link
               href="/#services"
-              className="border border-emerald-600 dark:border-emerald-500 text-emerald-600 dark:text-emerald-500 px-8 py-3 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors font-medium inline-flex items-center justify-center gap-2"
+              className="border border-primary text-foreground px-8 py-3 rounded-lg hover:bg-secondary transition-colors font-medium inline-flex items-center justify-center gap-2"
             >
               Partnership Models
             </Link>
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
