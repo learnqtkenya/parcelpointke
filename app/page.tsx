@@ -8,7 +8,6 @@ import {
   MapPin,
   Menu,
   X,
-  CheckCircle,
   Clock,
   Shield,
   Smartphone,
@@ -16,9 +15,7 @@ import {
   Star,
   Mail,
   Phone,
-  MessageCircle,
-  ExternalLink,
-  Users
+  MessageCircle
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
@@ -230,86 +227,6 @@ const HeroSection = () => {
                 <Smartphone className="h-5 w-5 text-emerald-600 dark:text-emerald-500" />
                 <span>Mobile Payments</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// CBD Questionnaire Ad Component 
-const CBDQuestionnaireAd: React.FC = () => {
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-
-  if (!isVisible) return null;
-
-  return (
-    <section className="relative pt-20 pb-8 bg-gradient-to-r from-emerald-50 via-emerald-100 to-emerald-50 dark:from-emerald-900/20 dark:via-emerald-800/30 dark:to-emerald-900/20 border-b border-emerald-200 dark:border-emerald-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Close button */}
-        <button
-          onClick={() => setIsVisible(false)}
-          className="absolute top-24 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 transition-colors z-10"
-          aria-label="Close announcement"
-        >
-          <X className="h-4 w-4" />
-        </button>
-
-        <div className="text-center">
-          {/* Announcement Badge */}
-          <div className="inline-flex items-center gap-2 bg-emerald-600 dark:bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            <Users className="h-4 w-4" />
-            NEW LOCATION LAUNCH
-          </div>
-
-          {/* Main Content */}
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-            Coming to <span className="text-emerald-600 dark:text-emerald-500">Nairobi CBD</span>!
-          </h2>
-          
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 max-w-3xl mx-auto">
-            Help us shape ParcelPoint in the heart of Nairobi. 
-            Your input will shape where and how we set up our next smart locker system.
-          </p>
-
-          {/* CTA Section */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSe5HNzjmj8Xkila7p0EIT9au0lsXH7WwLWUiLLC0nOFKO41OA/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-emerald-600 dark:bg-emerald-500 text-white px-8 py-4 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-semibold"
-            >
-              <Users className="h-5 w-5" />
-              Take Quick Survey
-              <ExternalLink className="h-4 w-4" />
-            </a>
-            
-            <div className="text-center sm:text-left">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                <Clock className="h-4 w-4 inline mr-1" />
-                Takes only 2 minutes
-              </p>
-              <p className="text-sm text-emerald-600 dark:text-emerald-500 font-medium">
-                Help shape ParcelPoint&apos;s expansion!
-              </p>
-            </div>
-          </div>
-
-          {/* Benefits */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
-              <MapPin className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
-              <span>Strategic Location Input</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
-              <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
-              <span>Community-Driven Choice</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
-              <Users className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
-              <span>Early Access Priority</span>
             </div>
           </div>
         </div>
@@ -1221,7 +1138,6 @@ const ParcelPointWebsite = () => {
     <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 overflow-x-hidden">
         <Navigation />
-        <CBDQuestionnaireAd />
         <HeroSection />
         <HowItWorksSection />
         <StatsSection />
