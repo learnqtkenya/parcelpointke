@@ -64,9 +64,9 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] mb-4"
             >
-              Smart Parcel
+              Convenient Drop-off
               <br />
-              <span className="text-muted-foreground">Delivery</span> Made Simple
+              <span className="text-muted-foreground">& Storage</span> Solution
             </motion.h1>
 
             <motion.p
@@ -75,8 +75,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg text-muted-foreground mb-6 leading-relaxed"
             >
-              Secure, convenient parcel pickup and delivery anytime, anywhere.
-              Skip the queues and collect on your schedule.
+              Secure 24/7 parcel drop-off, pickup, and storage lockers across Nairobi.
+              Skip the queues and access your packages on your schedule.
             </motion.p>
 
             <motion.div

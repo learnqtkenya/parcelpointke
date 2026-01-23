@@ -15,20 +15,12 @@ const locations = [
     coordinates: { lat: -1.231904, lng: 36.878941 },
   },
   {
-    name: 'Doonholm',
-    address: 'Donholm Savannah Rd',
+    name: 'Nairobi CBD',
+    address: 'Ronald Ngala St, adjacent to Bata, Shop 401',
     status: 'Active',
     hours: '24/7',
-    lockers: 15,
-    coordinates: { lat: -1.2990613, lng: 36.8889069 },
-  },
-  {
-    name: 'CBD',
-    address: 'Kenya National Archives',
-    status: 'Coming Soon',
-    hours: '24/7',
-    lockers: 48,
-    coordinates: { lat: -1.28487, lng: 36.82565 },
+    lockers: 28,
+    coordinates: { lat: -1.285868, lng: 36.827896 },
   },
 ]
 
@@ -44,20 +36,20 @@ export function Locations() {
   }
 
   return (
-    <section id="locations" className="py-16 lg:py-20 bg-background">
+    <section id="locations" className="py-12 lg:py-14 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             Our Locations
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Find ParcelPoint lockers at convenient spots across Nairobi
+            Convenient drop-off and storage lockers at strategic spots across Nairobi
           </p>
         </motion.div>
 

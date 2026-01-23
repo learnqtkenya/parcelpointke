@@ -38,14 +38,14 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="py-16 lg:py-20 bg-secondary/50">
+    <section id="faq" className="py-12 lg:py-14 bg-secondary/50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             Frequently Asked Questions

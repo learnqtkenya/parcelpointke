@@ -8,31 +8,43 @@ export default function IntegrationsPage() {
   const benefits = [
     {
       icon: Package,
+      iconColor: "text-blue-500",
+      iconBg: "bg-blue-500/10",
       title: "Locker Reservations",
       description: "Reserve lockers across our network of smart locker devices. Choose sizes and quantities that match your delivery volume."
     },
     {
       icon: Users,
+      iconColor: "text-purple-500",
+      iconBg: "bg-purple-500/10",
       title: "Team Management",
       description: "Add your delivery carriers to your organization. They get instant access to your reserved lockers through our mobile app."
     },
     {
       icon: BarChart3,
+      iconColor: "text-emerald-500",
+      iconBg: "bg-emerald-500/10",
       title: "Real-Time Tracking",
       description: "Monitor all your parcels in one dashboard. Track deliveries, collections, and locker utilization across all devices."
     },
     {
       icon: Shield,
+      iconColor: "text-orange-500",
+      iconBg: "bg-orange-500/10",
       title: "Secure & Reliable",
       description: "Every parcel is protected with unique unlock codes. Recipients receive SMS notifications for seamless collection."
     },
     {
       icon: Clock,
+      iconColor: "text-cyan-500",
+      iconBg: "bg-cyan-500/10",
       title: "24/7 Availability",
       description: "Our smart lockers operate around the clock. Your customers can collect parcels at their convenience, any time."
     },
     {
       icon: Building2,
+      iconColor: "text-rose-500",
+      iconBg: "bg-rose-500/10",
       title: "Scalable Solution",
       description: "Start with a few lockers and scale as you grow. Add more reservations and devices as your business expands."
     }
@@ -131,8 +143,8 @@ export default function IntegrationsPage() {
                 key={index}
                 className="bg-card rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-border"
               >
-                <div className="bg-secondary w-14 h-14 rounded-xl flex items-center justify-center mb-6">
-                  <benefit.icon className="text-foreground" size={28} />
+                <div className={`${benefit.iconBg} w-14 h-14 rounded-xl flex items-center justify-center mb-6`}>
+                  <benefit.icon className={benefit.iconColor} size={28} />
                 </div>
                 <h3 className="text-xl font-bold text-card-foreground mb-3">
                   {benefit.title}

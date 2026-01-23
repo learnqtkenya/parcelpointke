@@ -40,14 +40,14 @@ export function HowItWorks() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="how-it-works" className="py-16 lg:py-20 bg-secondary/50">
+    <section id="how-it-works" className="py-12 lg:py-14 bg-secondary/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             How It Works

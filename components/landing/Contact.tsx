@@ -50,7 +50,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-16 lg:py-20 bg-background">
+    <section id="contact" className="py-12 lg:py-14 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
           <motion.div

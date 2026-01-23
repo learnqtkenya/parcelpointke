@@ -48,24 +48,14 @@ const LockersPage = () => {
       description: "Located in the main entrance area of Garden City Mall, easily accessible from both the parking area and main mall entrance."
     },
     {
-      name: "Doonholm",
-      address: "Donholm Savannah Rd",
+      name: "Nairobi CBD",
+      address: "Ronald Ngala St, adjacent to Bata, Shop 401",
       status: "Active",
       hours: "24/7",
-      lockers: 15,
-      coordinates: { lat: -1.2990613, lng: 36.8889069 },
-      features: ["M-PESA Payment", "SMS Notifications", "Well-lit Area", "Residential Area"],
-      description: "Conveniently located in the heart of Donholm residential area, perfect for local community deliveries."
-    },
-    {
-      name: "CBD",
-      address: "Kenya National Archives",
-      status: "Coming Soon",
-      hours: "24/7",
-      lockers: 48,
-      coordinates: { lat: -1.28487, lng: 36.82565 },
+      lockers: 28,
+      coordinates: { lat: -1.285868, lng: 36.827896 },
       features: ["M-PESA Payment", "SMS Notifications", "High Traffic Area", "Business District"],
-      description: "Strategic location in Nairobi's Central Business District, ideal for office workers and business deliveries."
+      description: "Strategic location on Ronald Ngala Street in Nairobi's Central Business District, adjacent to Bata shop. Ideal for office workers and convenient drop-off storage."
     }
   ];
 
@@ -198,7 +188,7 @@ const LockersPage = () => {
               ParcelPoint Lockers
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl">
-              Find secure, convenient parcel pickup locations across Nairobi. Available 24/7 with M-PESA payment integration.
+              Convenient drop-off and storage solution across Nairobi. Secure 24/7 lockers with M-PESA payment integration.
             </p>
           </div>
 

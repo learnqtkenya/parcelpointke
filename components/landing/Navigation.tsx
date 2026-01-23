@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { Package, Menu, X } from 'lucide-react'
+import Image from 'next/image'
+import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
 
 const ctaItems = [
   { label: 'Lockers', href: '/lockers' },
+  { label: 'Integrations', href: '/integrations' },
   { label: 'Partners', href: '/partnerships' },
 ]
 
@@ -52,10 +54,15 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-2 group">
             <motion.div
-              whileHover={{ rotate: 12, scale: 1.1 }}
-              className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center"
+              whileHover={{ scale: 1.05 }}
+              className="relative w-9 h-9"
             >
-              <Package className="h-5 w-5 text-primary-foreground" />
+              <Image
+                src="/images/parcelpoint/logo-white.png"
+                alt="ParcelPoint"
+                fill
+                className="object-contain dark:invert-0 invert"
+              />
             </motion.div>
             <span className="text-lg font-bold text-foreground">ParcelPoint</span>
           </Link>

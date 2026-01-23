@@ -25,7 +25,7 @@
 
     /* Muted */
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 35%;
 
     /* Accent */
     --accent: 0 0% 96%;
@@ -69,7 +69,7 @@
 
     /* Muted */
     --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 64%;
+    --muted-foreground: 0 0% 75%;
 
     /* Accent */
     --accent: 0 0% 15%;
