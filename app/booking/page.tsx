@@ -77,7 +77,7 @@ function BookingPageContent() {
   const [error, setError] = useState<string | null>(null);
   const [locationId, setLocationId] = useState(extensionDeviceId || '');
   const [lockerSize, setLockerSize] = useState('medium');
-  const [hours, setHours] = useState(24);
+  const [hours, setHours] = useState(6);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [locations, setLocations] = useState<Location[]>([]);
@@ -133,12 +133,12 @@ function BookingPageContent() {
   const getDeviceAddress = (device: DeviceOverview): string => {
     const addressMap: Record<string, string> = {
       'Garden City': 'Thika Road, Nairobi',
-      'Doonholm': 'Donholm Savannah Rd',
-      'CBD': 'Kenya National Archives',
+      'Cianda': 'Ronald Ngala St, adjacent to Bata, Shop 401',
+      'CBD': 'Ronald Ngala St, adjacent to Bata, Shop 401',
     };
 
     for (const [key, value] of Object.entries(addressMap)) {
-      if (device.name.includes(key)) {
+      if (device.name.toLowerCase().includes(key.toLowerCase())) {
         return value;
       }
     }
@@ -250,7 +250,10 @@ function BookingPageContent() {
   const isStepValid = () => {
     switch (currentStep) {
       case 1:
-        return locationId && lockerSize;
+        if (!locationId || !lockerSize) return false;
+        const selectedLocation = locations.find(loc => loc.id === locationId);
+        if (!selectedLocation) return false;
+        return selectedLocation.available[lockerSize as 'small' | 'medium' | 'large'] > 0;
       case 2:
         return phoneNumber && hours > 0 && validatePhoneNumber(phoneNumber);
       default:
@@ -378,11 +381,20 @@ function BookingPageContent() {
                     {locations.filter(loc => loc.isActive).map((location) => (
                       <button
                       key={location.id}
-                      onClick={() => setLocationId(location.id)}
-                      className={`p-4 rounded-xl border-2 text-left transition-all ${
+                      onClick={() => {
+                        setLocationId(location.id);
+                        // Auto-select first available size if current is unavailable
+                        const currentSizeAvailable = location.available[lockerSize as 'small' | 'medium' | 'large'] > 0;
+                        if (!currentSizeAvailable) {
+                          const sizes: ('small' | 'medium' | 'large')[] = ['medium', 'small', 'large'];
+                          const availableSize = sizes.find(s => location.available[s] > 0);
+                          if (availableSize) setLockerSize(availableSize);
+                        }
+                      }}
+                      className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                         locationId === location.id
-                          ? 'border-primary bg-secondary'
-                          : 'border-border hover:border-primary/50'
+                          ? 'border-primary bg-secondary shadow-md'
+                          : 'border-border hover:border-primary/50 hover:shadow-sm'
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -397,16 +409,22 @@ function BookingPageContent() {
                       </div>
                       <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
                         <div className="text-center">
-                          <div className="font-medium">Small</div>
-                          <div className="text-success">{location.available.small} available</div>
+                          <div className="font-medium text-muted-foreground">Small</div>
+                          <div className={location.available.small > 0 ? 'text-success font-medium' : 'text-destructive'}>
+                            {location.available.small > 0 ? `${location.available.small} available` : 'Full'}
+                          </div>
                         </div>
                         <div className="text-center">
-                          <div className="font-medium">Medium</div>
-                          <div className="text-success">{location.available.medium} available</div>
+                          <div className="font-medium text-muted-foreground">Medium</div>
+                          <div className={location.available.medium > 0 ? 'text-success font-medium' : 'text-destructive'}>
+                            {location.available.medium > 0 ? `${location.available.medium} available` : 'Full'}
+                          </div>
                         </div>
                         <div className="text-center">
-                          <div className="font-medium">Large</div>
-                          <div className="text-success">{location.available.large} available</div>
+                          <div className="font-medium text-muted-foreground">Large</div>
+                          <div className={location.available.large > 0 ? 'text-success font-medium' : 'text-destructive'}>
+                            {location.available.large > 0 ? `${location.available.large} available` : 'Full'}
+                          </div>
                         </div>
                       </div>
                       </button>
@@ -420,30 +438,50 @@ function BookingPageContent() {
                     Choose Locker Size
                   </label>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {lockerSizes.map((locker) => (
-                      <button
-                        key={locker.size}
-                        onClick={() => setLockerSize(locker.size)}
-                        className={`p-4 rounded-xl border-2 text-left transition-all ${
-                          lockerSize === locker.size
-                            ? 'border-primary bg-secondary'
-                            : 'border-border hover:border-primary/50'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <Package className="h-6 w-6 text-primary" />
-                          {lockerSize === locker.size && <CheckCircle className="h-5 w-5 text-primary" />}
-                        </div>
-                        <h3 className="font-bold text-card-foreground capitalize mb-1">
-                          {locker.size} Locker
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-2">{locker.dimensions}</p>
-                        <p className="text-xs text-muted-foreground mb-3">{locker.description}</p>
-                        <div className="text-center">
-                          <span className="text-lg font-bold text-foreground">Same Price for All Sizes</span>
-                        </div>
-                      </button>
-                    ))}
+                    {lockerSizes.map((locker) => {
+                      const selectedLocation = locations.find(loc => loc.id === locationId);
+                      const available = selectedLocation?.available[locker.size] ?? 0;
+                      const isAvailable = available > 0;
+                      const isSelected = lockerSize === locker.size;
+
+                      return (
+                        <button
+                          key={locker.size}
+                          onClick={() => isAvailable && setLockerSize(locker.size)}
+                          disabled={!isAvailable}
+                          className={`p-4 rounded-xl border-2 text-left transition-all relative ${
+                            !isAvailable
+                              ? 'border-border bg-muted/50 cursor-not-allowed opacity-60'
+                              : isSelected
+                                ? 'border-primary bg-secondary shadow-md'
+                                : 'border-border hover:border-primary/50 hover:shadow-sm'
+                          }`}
+                        >
+                          {!isAvailable && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-background/60 rounded-xl">
+                              <span className="bg-destructive/90 text-destructive-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                                Unavailable
+                              </span>
+                            </div>
+                          )}
+                          <div className="flex items-center justify-between mb-2">
+                            <Package className={`h-6 w-6 ${isAvailable ? 'text-primary' : 'text-muted-foreground'}`} />
+                            {isSelected && isAvailable && <CheckCircle className="h-5 w-5 text-primary" />}
+                          </div>
+                          <h3 className="font-bold text-card-foreground capitalize mb-1">
+                            {locker.size} Locker
+                          </h3>
+                          <p className="text-sm text-muted-foreground mb-2">{locker.dimensions}</p>
+                          <p className="text-xs text-muted-foreground mb-3">{locker.description}</p>
+                          <div className="flex items-center justify-between">
+                            <span className={`text-sm font-medium ${isAvailable ? 'text-success' : 'text-destructive'}`}>
+                              {available} available
+                            </span>
+                            <span className="text-sm font-semibold text-foreground">KES 50+</span>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
