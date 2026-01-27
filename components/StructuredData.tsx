@@ -229,3 +229,243 @@ export function WebSiteStructuredData() {
     />
   );
 }
+
+export function LocationsStructuredData() {
+  const locationsSchema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://parcelpoint.co.ke/lockers/garden-city-mall",
+      "name": "ParcelPoint Garden City Mall - Parcel Drop-off & Pickup",
+      "alternateName": ["ParcelPoint Garden City", "Garden City Parcel Locker", "Garden City Drop-off Point"],
+      "description": "24/7 secure parcel drop-off, pickup, and storage lockers at Garden City Mall, Thika Road, Nairobi. 48 smart lockers with M-PESA payment. Convenient pickup point near Roysambu, Kasarani, and Garden Estate.",
+      "url": "https://parcelpoint.co.ke/lockers/garden-city-mall",
+      "telephone": "+254759777587",
+      "email": "hello@parcelpoint.co.ke",
+      "image": "https://parcelpoint.co.ke/images/parcelpoint/1.jpeg",
+      "priceRange": "KES 50-200",
+      "paymentAccepted": "M-PESA",
+      "currenciesAccepted": "KES",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Garden City Mall, Thika Road",
+        "addressLocality": "Nairobi",
+        "addressRegion": "Nairobi County",
+        "postalCode": "00100",
+        "addressCountry": "KE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -1.231904,
+        "longitude": 36.878941
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "24/7 Access", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "M-PESA Payment", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "SMS Notifications", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Security Camera", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Indoor Location", "value": true }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Parcel Locker Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Parcel Drop-off",
+              "alternateName": ["Drop-off Point", "Package Drop-off"],
+              "description": "Secure drop-off point for parcels and packages"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Parcel Pickup",
+              "alternateName": ["Pickup Point", "Collection Point"],
+              "description": "24/7 parcel pickup and collection service"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Storage Point",
+              "alternateName": ["Temporary Storage", "Secure Storage"],
+              "description": "Secure temporary storage for personal items and parcels"
+            }
+          }
+        ]
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Nairobi" },
+        { "@type": "Place", "name": "Roysambu" },
+        { "@type": "Place", "name": "Kasarani" },
+        { "@type": "Place", "name": "Garden Estate" },
+        { "@type": "Place", "name": "Thika Road" }
+      ],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "ParcelPoint Kenya",
+        "url": "https://parcelpoint.co.ke"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://parcelpoint.co.ke/lockers/nairobi-cbd",
+      "name": "ParcelPoint Nairobi CBD - Drop-off & Storage Point",
+      "alternateName": ["ParcelPoint CBD", "CBD Parcel Locker", "Nairobi CBD Drop-off Point", "CBD Storage Point"],
+      "description": "24/7 secure parcel drop-off, pickup, and storage lockers in Nairobi CBD on Ronald Ngala Street, adjacent to Bata. 28 smart lockers with M-PESA payment. Central drop-off point in the heart of Nairobi's business district.",
+      "url": "https://parcelpoint.co.ke/lockers/nairobi-cbd",
+      "telephone": "+254759777587",
+      "email": "hello@parcelpoint.co.ke",
+      "image": "https://parcelpoint.co.ke/images/parcelpoint/2.jpeg",
+      "priceRange": "KES 50-200",
+      "paymentAccepted": "M-PESA",
+      "currenciesAccepted": "KES",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ronald Ngala Street, Shop 401, adjacent to Bata",
+        "addressLocality": "Nairobi Central Business District",
+        "addressRegion": "Nairobi County",
+        "postalCode": "00100",
+        "addressCountry": "KE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -1.285868,
+        "longitude": 36.827896
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "24/7 Access", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "M-PESA Payment", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "SMS Notifications", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "High Traffic Area", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Business District", "value": true }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Parcel Locker Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Parcel Drop-off",
+              "alternateName": ["Drop-off Point", "Drop off in CBD", "CBD Drop-off"],
+              "description": "Secure drop-off point for parcels in Nairobi CBD"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Parcel Pickup",
+              "alternateName": ["Pickup Point", "CBD Pickup", "Collection Point CBD"],
+              "description": "24/7 parcel pickup in Nairobi Central Business District"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Storage Point",
+              "alternateName": ["Storage Point CBD", "CBD Storage", "Temporary Storage"],
+              "description": "Secure storage point in Nairobi CBD for personal items"
+            }
+          }
+        ]
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Nairobi" },
+        { "@type": "Place", "name": "Nairobi CBD" },
+        { "@type": "Place", "name": "Central Business District" },
+        { "@type": "Place", "name": "Tom Mboya Street" },
+        { "@type": "Place", "name": "River Road" },
+        { "@type": "Place", "name": "Moi Avenue" }
+      ],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "ParcelPoint Kenya",
+        "url": "https://parcelpoint.co.ke"
+      }
+    }
+  ];
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Parcel Drop-off, Pickup & Storage Services",
+    "alternateName": ["Drop-off Point", "Pickup Point", "Storage Point", "Parcel Locker", "Collection Point"],
+    "serviceType": ["Parcel Drop-off", "Parcel Pickup", "Temporary Storage", "Package Collection", "Drop-off Service"],
+    "description": "Secure 24/7 parcel drop-off, pickup, and storage lockers across Nairobi. Find convenient drop-off points and storage points near you in Nairobi CBD and Garden City Mall. M-PESA payment accepted.",
+    "provider": {
+      "@type": "Organization",
+      "name": "ParcelPoint Kenya",
+      "url": "https://parcelpoint.co.ke"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Nairobi" },
+      { "@type": "AdministrativeArea", "name": "Nairobi CBD" },
+      { "@type": "Place", "name": "Garden City Mall" }
+    ],
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": "https://parcelpoint.co.ke/booking",
+      "serviceLocation": [
+        {
+          "@type": "Place",
+          "name": "ParcelPoint Garden City Mall",
+          "address": "Garden City Mall, Thika Road, Nairobi"
+        },
+        {
+          "@type": "Place",
+          "name": "ParcelPoint Nairobi CBD",
+          "address": "Ronald Ngala Street, Shop 401, Nairobi CBD"
+        }
+      ]
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "50",
+      "priceCurrency": "KES",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price": "50",
+        "priceCurrency": "KES",
+        "description": "Starting price for locker booking"
+      }
+    }
+  };
+
+  return (
+    <>
+      {locationsSchema.map((schema, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+    </>
+  );
+}

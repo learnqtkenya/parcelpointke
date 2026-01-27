@@ -185,10 +185,10 @@ const LockersPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="mb-6">
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-2">
-              ParcelPoint Lockers
+              Parcel Drop-off, Pickup & Storage Lockers in Nairobi
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl">
-              Convenient drop-off and storage solution across Nairobi. Secure 24/7 lockers with M-PESA payment integration.
+              Find secure drop-off, pickup, and storage points near you. 24/7 parcel lockers in Nairobi CBD and Garden City Mall with M-PESA payment.
             </p>
           </div>
 
@@ -291,6 +291,63 @@ const LockersPage = () => {
             </button>
           </div>
         )}
+
+        {/* SEO Content Section */}
+        <section className="mt-16 bg-card rounded-2xl border border-border p-8">
+          <h2 className="text-2xl font-bold text-foreground mb-6">
+            Parcel Drop-off and Pickup Points in Nairobi
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-3">
+                Nairobi CBD Drop-off & Storage Point
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Our Nairobi CBD location on Ronald Ngala Street (adjacent to Bata, Shop 401) is the ideal drop-off point for office workers and anyone in the Central Business District. With 28 secure lockers, it&apos;s perfect for parcel pickup and temporary storage in the heart of Nairobi.
+              </p>
+              <p className="text-muted-foreground text-sm">
+                <strong>Nearby areas:</strong> Tom Mboya Street, River Road, Moi Avenue, City Centre
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-3">
+                Garden City Mall Pickup Point
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Our Garden City Mall location on Thika Road offers 48 lockers for convenient parcel drop-off, pickup, and storage. Located at the main entrance, it&apos;s easily accessible with parking and perfect for residents of Roysambu, Kasarani, and surrounding areas looking for a storage point near them.
+              </p>
+              <p className="text-muted-foreground text-sm">
+                <strong>Nearby areas:</strong> Roysambu, Kasarani, Garden Estate, Thika Road
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-border">
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Why Choose ParcelPoint for Drop-off and Storage?
+            </h3>
+            <ul className="grid sm:grid-cols-2 gap-3 text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                24/7 access to all pickup and drop-off points
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                Secure storage with SMS notifications
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                Convenient M-PESA payment
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                Multiple locker sizes for all parcel types
+              </li>
+            </ul>
+          </div>
+        </section>
 
         {/* Call to Action */}
         <div className="mt-16 bg-secondary rounded-2xl p-8 text-center">
