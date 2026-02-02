@@ -103,7 +103,7 @@ function BookingPageContent() {
       const devicesData = await getDevicesOverview();
 
       const transformedLocations: Location[] = devicesData
-        .filter(device => device.status === 0) // Only active devices
+        .filter(device => device.status === 0)
         .map(device => ({
           id: device.id,
           name: device.name,
@@ -129,7 +129,6 @@ function BookingPageContent() {
     }
   };
 
-  // Helper function to extract address from device name or use a default
   const getDeviceAddress = (device: DeviceOverview): string => {
     const addressMap: Record<string, string> = {
       'Garden City': 'Thika Road, Nairobi',
@@ -176,7 +175,12 @@ function BookingPageContent() {
 
   const handlePhoneChange = (value: string) => {
     setPhoneNumber(value);
-    setPhoneError(null);
+    const cleaned = value.replace(/\D/g, '');
+    if (cleaned.length >= 9 && !validatePhoneNumber(value)) {
+      setPhoneError('Please enter a valid Kenyan phone number (07XX XXX XXX or 254XXX XXX XXX)');
+    } else {
+      setPhoneError(null);
+    }
   };
 
   const handleBookingSubmit = async () => {
@@ -383,8 +387,7 @@ function BookingPageContent() {
                       key={location.id}
                       onClick={() => {
                         setLocationId(location.id);
-                        // Auto-select first available size if current is unavailable
-                        const currentSizeAvailable = location.available[lockerSize as 'small' | 'medium' | 'large'] > 0;
+                          const currentSizeAvailable = location.available[lockerSize as 'small' | 'medium' | 'large'] > 0;
                         if (!currentSizeAvailable) {
                           const sizes: ('small' | 'medium' | 'large')[] = ['medium', 'small', 'large'];
                           const availableSize = sizes.find(s => location.available[s] > 0);
@@ -486,24 +489,27 @@ function BookingPageContent() {
                 </div>
               )}
             </div>
-            <div className="flex justify-between mt-8 pt-6 border-t border-border">
-              <button
-                disabled={true}
-                className="bg-muted text-muted-foreground cursor-not-allowed px-6 py-3 rounded-lg font-medium"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => setCurrentStep(2)}
-                disabled={!isStepValid()}
-                className={`px-8 py-3 rounded-lg font-medium transition-colors ${
-                  isStepValid()
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-muted text-muted-foreground cursor-not-allowed'
-                }`}
-              >
-                Next Step
-              </button>
+            <div className="mt-8 pt-6 border-t border-border">
+              {!isStepValid() && (
+                <p className="text-sm text-muted-foreground mb-3 text-right">
+                  {!locationId
+                    ? 'Select a location to continue'
+                    : 'Selected locker size is unavailable at this location'}
+                </p>
+              )}
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setCurrentStep(2)}
+                  disabled={!isStepValid()}
+                  className={`px-8 py-3 rounded-lg font-medium transition-colors ${
+                    isStepValid()
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                  }`}
+                >
+                  Next Step
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -603,6 +609,9 @@ function BookingPageContent() {
                   <p className="text-sm text-muted-foreground mt-2">
                     First hour: KES 50 + {Math.max(0, hours - 1)} additional hours × KES 10/hour
                   </p>
+                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium mt-2">
+                    Your {hours}-hour booking starts immediately after payment is confirmed.
+                  </p>
                 </div>
               </div>
               <div>
@@ -675,7 +684,6 @@ function BookingPageContent() {
     );
   }
 
-  // Step 3 - Confirmation
   return (
     <div className="bg-background pt-16 pb-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
@@ -720,7 +728,7 @@ function BookingPageContent() {
                   </li>
                   <li className="flex items-start">
                     <span className="font-semibold text-blue-600 mr-2">3.</span>
-                    <span>Your booking for Locker #{extensionLockerId} will be extended by {hours} hours</span>
+                    <span>Your booking for Locker #{extensionLockerId} will be extended by {hours} hours starting immediately</span>
                   </li>
                   <li className="flex items-start">
                     <span className="font-semibold text-blue-600 mr-2">4.</span>
@@ -743,7 +751,7 @@ function BookingPageContent() {
                   </li>
                   <li className="flex items-start">
                     <span className="font-semibold text-blue-600 mr-2">4.</span>
-                    <span>Use the code at {locations.find(loc => loc.id === locationId)?.name} for {hours} hours</span>
+                    <span>Your {hours}-hour booking at {locations.find(loc => loc.id === locationId)?.name} starts immediately after payment</span>
                   </li>
                 </ol>
               )}
