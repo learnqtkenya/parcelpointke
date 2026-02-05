@@ -83,6 +83,41 @@ export function HowItWorks() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-12"
+        >
+          <h3 className="text-2xl font-bold text-foreground text-center mb-6">
+            See It In Action
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="bg-card rounded-2xl border border-border shadow-md overflow-hidden">
+              <div className="relative w-full" style={{ paddingBottom: '177.78%' }}>
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7541775839172513029"
+                  className="absolute inset-0 w-full h-full"
+                  allowFullScreen
+                  allow="encrypted-media"
+                  title="ParcelPoint TikTok - How to use smart lockers"
+                />
+              </div>
+            </div>
+            <div className="bg-card rounded-2xl border border-border shadow-md overflow-hidden">
+              <div className="relative w-full" style={{ paddingBottom: '177.78%' }}>
+                <iframe
+                  src="https://www.youtube.com/embed/cR77eOPbuaQ"
+                  className="absolute inset-0 w-full h-full"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  title="ParcelPoint YouTube - How to use smart lockers"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
