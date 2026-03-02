@@ -8,10 +8,10 @@ import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
 const navItems = [
-  { label: 'Home', href: '#home' },
-  { label: 'How It Works', href: '#how-it-works' },
+  { label: 'Home', href: '/#home' },
+  { label: 'How It Works', href: '/#how-it-works' },
   { label: 'Locations', href: '#locations' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'FAQ', href: '/#faq' },
 ]
 
 const ctaItems = [
